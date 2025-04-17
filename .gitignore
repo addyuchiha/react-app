@@ -1,0 +1,51 @@
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Dependency directories
+node_modules/
+
+# Build output
+dist/
+dist-ssr/
+.build/
+.next/
+out/
+
+# Tailwind CSS
+tailwind.config.js
+tailwind.config.cjs
+tailwind.config.mjs
+tailwind.config.ts
+
+# Environment variables
+.env
+.env.*.local
+*.local
+
+# System files
+.DS_Store
+Thumbs.db
+
+# Editor folders and settings
+.vscode/*
+!.vscode/extensions.json
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Optional: lockfiles (if not using them)
+# yarn.lock
+# package-lock.json
+# pnpm-lock.yaml
+
+# Optional: types build cache (for TypeScript)
+*.tsbuildinfo
