@@ -1,25 +1,36 @@
-import React from "react";
+import { ReactDOM, ReactNode } from "react";
 
-const Button = () => {
-    return (
-        <button className="bg-accent px-4 py-3 rounded-lg flex space-x-2 hover:bg-opacity-70 transition-all">
-            <span>Get Started</span>
-            <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke-width="1.5"
-                stroke="currentColor"
-                className="size-6"
-            >
-                <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"
-                />
-            </svg>
-        </button>
-    );
+interface Props {
+  children: string | ReactNode;
+  color: "accent" | "primary";
+}
+
+const getStarted: ReactNode = (
+  <>
+    <span>Get Started</span>
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      fill="none"
+      viewBox="0 0 24 24"
+      strokeWidth="1.5"
+      stroke="currentColor"
+      className="size-6"
+    >
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"
+      />
+    </svg>
+  </>
+);
+
+const Button = ({ children = getStarted, color = "accent" }: Props) => {
+  return (
+    <button className={`bg-${color} px-4 py-3 rounded-lg flex space-x-2 hover:brightness-90 transition-all text-textLight`}>
+        {children}
+    </button>
+  );
 };
 
 export default Button;
