@@ -4,7 +4,7 @@ const Navbar = () => {
   return (
     <>
       <header className="flex justify-center">
-        <nav className="bg-primary grid grid-cols-3 text-textLight  mt-4 p-4 rounded-2xl items-center fixed w-full max-w-5xl mx-16">
+        <nav className="bg-primary grid grid-cols-3 text-textLight z-20 mt-4 p-4 rounded-2xl items-center fixed w-full max-w-5xl mx-16">
           <div className="text-2xl font-black">LOGO</div>
           <ul className="grid grid-cols-4 space-x-1 text-sm       items-center">
             <a

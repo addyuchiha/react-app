@@ -10,7 +10,7 @@ const Hero = () => {
           Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quisquam nam reiciendis, dicta magnam error voluptatem.
         </span>
         <div className="flex space-x-2">
-          <Button children={undefined} color={"accent"} />
+          <Button children={undefined} color="accent" />
           <Button children="Learn More" color="primary" />
         </div>
       </div>
