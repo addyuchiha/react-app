@@ -1,8 +1,16 @@
-import React from 'react'
+import Card from "./Card"
 
 const Features = () => {
   return (
-    <div>Features</div>
+    <>
+      <h1 className="text-6xl font-bold text-center">Features</h1>
+      <div className="flex space-x-4 py-24">
+        <Card />
+        <Card />
+        <Card />
+        <Card />
+      </div>
+    </>
   )
 }
 
