@@ -1,4 +1,5 @@
-import { ReactDOM, ReactNode } from "react";
+import { ReactNode } from "react";
+import { Link } from "react-router-dom";
 
 interface Props {
   children: string | ReactNode;
@@ -27,11 +28,13 @@ const getStarted: ReactNode = (
 
 const Button = ({ children = getStarted, color = "accent" }: Props) => {
   return (
-    <button type="button"
-      className={`bg-${color} px-4 py-3 rounded-lg flex space-x-2 hover:brightness-90 transition-all text-textLight`}
-    >
-      {children}
-    </button>
+    <Link to="/login">
+      <button type="button"
+        className={`bg-${color} px-4 py-3 rounded-lg flex space-x-2 hover:brightness-90 transition-all text-textLight`}
+      >
+        {children}
+      </button>
+    </Link>
   );
 };
 
