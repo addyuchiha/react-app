@@ -3,7 +3,7 @@ import HeroImages from "./HeroImages";
 
 const Hero = () => {
   return (
-    <section className="max-w-5xl mx-auto grid grid-cols-2 h-screen items-center text-textMain">
+    <section className="max-w-5xl mx-auto flex justify-center flex-col md:grid grid-cols-2 h-screen items-center text-textMain">
       <div className="space-y-4">
         <h1 className="text-6xl font-bold">Lorem <span className="text-accent">ipsum</span> dolor sit amet.</h1>
         <span className="block">
@@ -14,9 +14,10 @@ const Hero = () => {
           <Button children="Learn More" color="primary" />
         </div>
       </div>
-      <div className="flex justify-end items-center">
+      <div className="md:flex justify-end items-center hidden">
         <HeroImages />
       </div>
+
       <div className="absolute bottom-4 justify-self-center rounded-full bg-primary p-2 cursor-pointer animate-bounce">
         <svg
           xmlns="http://www.w3.org/2000/svg"

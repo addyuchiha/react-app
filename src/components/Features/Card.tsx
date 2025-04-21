@@ -2,7 +2,7 @@ import React from "react";
 
 const Card = () => {
   return (
-    <div className="bg-gradient-to-b from-accent to-indigo-300 p-8 rounded-3xl space-y-2 w-full">
+    <div className="bg-gradient-to-b from-accent to-indigo-400 p-8 rounded-3xl space-y-2 w-full shadow-lg shadow-accent hover:-translate-y-2 transition-all duration-500">
       <div className="rounded-lg text-white bg-primary p-2 py-1 text-sm w-min">
         PAID
       </div>

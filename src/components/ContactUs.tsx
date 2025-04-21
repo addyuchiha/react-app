@@ -2,20 +2,17 @@ import React, { useState, FormEvent, ChangeEvent } from "react";
 import { Send, Mail, User, MessageSquare, AlertCircle } from "lucide-react";
 
 interface FormData {
-  name: string;
   email: string;
   message: string;
 }
 
 interface FormErrors {
-  name?: string;
   email?: string;
   message?: string;
 }
 
 const ContactUs: React.FC = () => {
   const [formData, setFormData] = useState<FormData>({
-    name: "",
     email: "",
     message: ""
   });
@@ -63,7 +60,6 @@ const ContactUs: React.FC = () => {
   const handleSubmit = (e: FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
     const isValid = validateForm();
-    setSubmitted(true);
     
     if (isValid) {
       console.log("Form submitted:", formData);
@@ -88,7 +84,7 @@ const ContactUs: React.FC = () => {
   };
   
   return (
-    <div className="flex justify-center items-center w-full p-6">
+    <div className="flex justify-center items-center w-full md:p-6">
       <div className="bg-gray-900 rounded-3xl text-white p-8 shadow-xl w-full max-w-2xl border border-gray-800">
         <h1 className="text-4xl font-bold text-center mb-8">Contact Us</h1>
         
