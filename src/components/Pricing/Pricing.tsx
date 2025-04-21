@@ -4,7 +4,7 @@ function Pricing() {
   return (
     <>
         <h1 className="text-6xl font-bold text-center">Pricing</h1>
-        <div className='py-24 grid grid-cols-3 space-x-4 max-w-5xl mx-auto'>
+        <div className='py-24 space-y-8 md:space-y-0 md:grid grid-cols-3 md:space-x-4 max-w-5xl mx-auto'>
             <Card type="Basic" price={99} features={["Lorem, ipsum.", "Lorem, ipsum dolor.", "Feature 1", "Lorem, dolor.", "Dolor", "Another Feat", "Feature 1"]} />
             <Card type="Standard" price={149} features={["Lorem, ipsum.", "Lorem, ipsum dolor.", "Feature 1", "Lorem, dolor.", "Dolor", "Another Feat", "Feature 1"]} />
             <Card type="Premium" price={299} features={["Lorem, ipsum.", "Lorem, ipsum dolor.", "Feature 1", "Lorem, dolor.", "Dolor", "Another Feat", "Feature 1"]} />
