@@ -67,7 +67,23 @@ const ContactUs: React.FC = () => {
     
     if (isValid) {
       console.log("Form submitted:", formData);
-      // Handle successful form submission logic here
+      fetch("/api/notification/contact", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          email: formData.email,
+          body: formData.message
+        })
+      }).then(response => {
+        if (!response.ok) {
+          console.error(`Error submitting form data: ${response.status}`)
+          alert("Something went wrong please again try later.")
+        } else {
+          setSubmitted(true);
+        }
+      })
     }
   };
   
