@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Eye, EyeOff, UserPlus, Lock, Mail, User } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, redirect } from "react-router-dom";
 
 function SignUp() {
   const [name, setName] = useState("");
@@ -49,15 +49,31 @@ function SignUp() {
     return isValid;
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (validateForm()) {
       setIsLoading(true);
-      // Simulate API call
-      setTimeout(() => {
-        setIsLoading(false);
-        alert("Registration successful!");
-      }, 1500);
+      // Make Register api call
+      fetch("/api/register", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+            name: name,
+            email: email,
+            password: password,
+            confirmPassword: confirmPassword
+        })
+      }).then(response => {
+        if (!response.ok) {
+            console.error(`Error submitting form data: ${response.status}`);
+            alert("Something went wrong please again try later.");
+          } else {
+            redirect("/sign-in");
+          }
+          setIsLoading(false);
+      })
     }
   };
 
@@ -204,7 +220,7 @@ function SignUp() {
         <div className="text-center mt-4">
           <p className="text-sm text-gray-600">
             Already have an account?{" "}
-            <Link to={"/login"} className="font-medium text-accent hover:text-indigo-600 transition-all">
+            <Link to={"/sign-in"} className="font-medium text-accent hover:text-indigo-600 transition-all">
               Sign in
             </Link>
           </p>

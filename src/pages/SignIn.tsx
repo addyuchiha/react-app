@@ -1,8 +1,10 @@
 import { useState } from "react";
 import { Eye, EyeOff, LogIn, Lock, Mail } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, redirect } from "react-router-dom";
 
-function Login() {
+const API_BASE = import.meta.env.VITE_API_BASE_URL;
+
+function SignIn() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
@@ -33,15 +35,39 @@ function Login() {
     return isValid;
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (validateForm()) {
       setIsLoading(true);
-      // Simulate API call
-      setTimeout(() => {
+      fetch(`${API_BASE}/api/login`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          username: email,
+          password: password,
+        }),
+      }).then((response) => {
+        if (response.status == 401) {
+          const newErrors = { email: "", password: "" };
+          newErrors.email = "Invalid Credential"
+          newErrors.password = "Invalid Credential"
+          setErrors(newErrors)
+          setIsLoading(false)
+        } else if (!response.ok) {
+          setIsLoading(false)
+          console.error(`Error submitting form data: ${response.status}`);
+          alert("Something went wrong please again try later.");
+        } else {
+          redirect("/dashboard");
+        }
         setIsLoading(false);
-        alert("Login successful!");
-      }, 1500);
+      }).catch(response => {
+        setIsLoading(false)
+        console.error(`Error submitting form data: ${response.status}`);
+        alert("Something went wrong please again try later.");
+      });
     }
   };
 
@@ -50,17 +76,21 @@ function Login() {
       <div className="rounded-3xl shadow-lg shadow-accent border-accent border-4 p-8 flex flex-col space-y-6 w-full max-w-md bg-white relative overflow-hidden">
         <div className="absolute -top-10 -right-10 w-32 h-32 bg-blue-400 opacity-20 rounded-full"></div>
         <div className="absolute -bottom-8 -left-8 w-24 h-24 bg-purple-400 opacity-20 rounded-full"></div>
-        
+
         <div className="flex items-center justify-between">
-          <h2 className="text-3xl font-bold text-gray-800">Login</h2>
+          <h2 className="text-3xl font-bold text-gray-800">Sign In</h2>
           <LogIn className="text-accent h-8 w-8" />
         </div>
-        
-        <p className="text-gray-600 text-sm">Welcome back! Please enter your credentials to access your account.</p>
-        
+
+        <p className="text-gray-600 text-sm">
+          Welcome back! Please enter your credentials to access your account.
+        </p>
+
         <form onSubmit={handleSubmit} className="space-y-5">
           <div className="space-y-2">
-            <label className="text-sm font-medium text-gray-700 block">Email</label>
+            <label className="text-sm font-medium text-gray-700 block">
+              Email
+            </label>
             <div className="relative">
               <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                 <Mail className="h-5 w-5 text-gray-400" />
@@ -75,11 +105,15 @@ function Login() {
                 onChange={(e) => setEmail(e.target.value)}
               />
             </div>
-            {errors.email && <p className="text-red-500 text-xs mt-1">{errors.email}</p>}
+            {errors.email && (
+              <p className="text-red-500 text-xs mt-1">{errors.email}</p>
+            )}
           </div>
-          
+
           <div className="space-y-2">
-            <label className="text-sm font-medium text-gray-700 block">Password</label>
+            <label className="text-sm font-medium text-gray-700 block">
+              Password
+            </label>
             <div className="relative">
               <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                 <Lock className="h-5 w-5 text-gray-400" />
@@ -105,9 +139,11 @@ function Login() {
                 )}
               </button>
             </div>
-            {errors.password && <p className="text-red-500 text-xs mt-1">{errors.password}</p>}
+            {errors.password && (
+              <p className="text-red-500 text-xs mt-1">{errors.password}</p>
+            )}
           </div>
-          
+
           <div className="flex items-center justify-between">
             <div className="flex items-center">
               <input
@@ -116,15 +152,21 @@ function Login() {
                 type="checkbox"
                 className="h-4 w-4 text-accent focus:ring-accent border-gray-300 rounded"
               />
-              <label htmlFor="remember-me" className="ml-2 block text-sm text-gray-700">
+              <label
+                htmlFor="remember-me"
+                className="ml-2 block text-sm text-gray-700"
+              >
                 Remember me
               </label>
             </div>
-            <a href="#" className="text-sm font-medium text-accent hover:text-accent">
+            <a
+              href="#"
+              className="text-sm font-medium text-accent hover:text-accent"
+            >
               Forgot password?
             </a>
           </div>
-          
+
           <button
             type="submit"
             className="w-full flex justify-center py-2 px-4 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-accent hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-accent transition-all duration-200 relative overflow-hidden"
@@ -140,11 +182,14 @@ function Login() {
             )}
           </button>
         </form>
-        
+
         <div className="text-center mt-4">
           <p className="text-sm text-gray-600">
             Don't have an account?{" "}
-            <Link to={"/sign-up"} className="font-medium text-accent hover:text-indigo-600 transition-all">
+            <Link
+              to={"/sign-up"}
+              className="font-medium text-accent hover:text-indigo-600 transition-all"
+            >
               Sign up
             </Link>
           </p>
@@ -154,4 +199,4 @@ function Login() {
   );
 }
 
-export default Login;
+export default SignIn;
