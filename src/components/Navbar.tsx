@@ -12,11 +12,11 @@ const Navbar = () => {
     <>
       <header className="flex justify-center w-full px-4 fixed z-20">
         <nav className="bg-primary text-textLight mt-4 p-4 rounded-2xl items-center w-full max-w-5xl">
-          <div className="flex justify-between items-center">
+          <div className="flex md:grid grid-cols-3 justify-between items-center">
             <div className="text-2xl font-black">LOGO</div>
             
             {/* Desktop Navigation */}
-            <ul className="hidden md:flex space-x-6 text-sm items-center">
+            <ul className="hidden md:flex space-x-6 text-sm items-center justify-center">
               <a
                 href="#"
                 className="text-center hover:brightness-90 transition-all"
@@ -43,7 +43,7 @@ const Navbar = () => {
               </a>
             </ul>
             
-            <div className="hidden md:block">
+            <div className="hidden md:flex justify-end">
               <Button children={undefined} color="accent" />
             </div>
             

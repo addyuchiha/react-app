@@ -28,7 +28,7 @@ const getStarted: ReactNode = (
 
 const Button = ({ children = getStarted, color = "accent" }: Props) => {
   return (
-    <Link to="/login">
+    <Link to="/sign-in">
       <button type="button"
         className={`bg-${color} px-4 py-3 rounded-lg flex space-x-2 hover:brightness-90 transition-all text-textLight`}
       >
