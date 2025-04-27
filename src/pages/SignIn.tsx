@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Eye, EyeOff, LogIn, Lock, Mail } from "lucide-react";
-import { Link, redirect } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const API_BASE = import.meta.env.VITE_API_BASE_URL;
 
@@ -10,6 +10,7 @@ function SignIn() {
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [errors, setErrors] = useState({ email: "", password: "" });
+  const navigate = useNavigate();
 
   const validateForm = () => {
     const newErrors = { email: "", password: "" };
@@ -60,7 +61,8 @@ function SignIn() {
           console.error(`Error submitting form data: ${response.status}`);
           alert("Something went wrong please again try later.");
         } else {
-          redirect("/dashboard");
+          console.log("test")
+          navigate("/dashboard");
         }
         setIsLoading(false);
       }).catch(response => {
