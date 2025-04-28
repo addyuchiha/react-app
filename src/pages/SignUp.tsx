@@ -1,23 +1,45 @@
 import { useState } from "react";
 import { Eye, EyeOff, UserPlus, Lock, Mail, User } from "lucide-react";
-import { Link, redirect } from "react-router-dom";
+import { Link, redirect, useNavigate } from "react-router-dom";
+
+const API_BASE = import.meta.env.VITE_API_BASE_URL;
 
 function SignUp() {
-  const [name, setName] = useState("");
+  const navigate = useNavigate()
+
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [errors, setErrors] = useState({ name: "", email: "", password: "", confirmPassword: "" });
+  const [errors, setErrors] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+  });
 
   const validateForm = () => {
-    const newErrors = { name: "", email: "", password: "", confirmPassword: "" };
+    const newErrors = {
+      firstName: "",
+      lastName: "",
+      email: "",
+      password: "",
+      confirmPassword: "",
+    };
     let isValid = true;
 
-    if (!name) {
-      newErrors.name = "Name is required";
+    if (!firstName) {
+      newErrors.firstName = "First name is required";
+      isValid = false;
+    }
+
+    if (!lastName) {
+      newErrors.lastName = "Last name is required";
       isValid = false;
     }
 
@@ -32,8 +54,8 @@ function SignUp() {
     if (!password) {
       newErrors.password = "Password is required";
       isValid = false;
-    } else if (password.length < 6) {
-      newErrors.password = "Password must be at least 6 characters";
+    } else if (password.length < 10) {
+      newErrors.password = "Password must be at least 10 characters";
       isValid = false;
     }
 
@@ -54,26 +76,26 @@ function SignUp() {
     if (validateForm()) {
       setIsLoading(true);
       // Make Register api call
-      fetch("/api/register", {
+      fetch(`${API_BASE}/api/register`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-            name: name,
-            email: email,
-            password: password,
-            confirmPassword: confirmPassword
-        })
-      }).then(response => {
+          firstName: firstName,
+          lastName: lastName,
+          email: email,
+          password: password,
+        }),
+      }).then((response) => {
         if (!response.ok) {
-            console.error(`Error submitting form data: ${response.status}`);
-            alert("Something went wrong please again try later.");
-          } else {
-            redirect("/sign-in");
-          }
-          setIsLoading(false);
-      })
+          console.error(`Error submitting form data: ${response.status}`);
+          alert("Something went wrong please again try later.");
+        } else {
+          navigate("/sign-in");
+        }
+        setIsLoading(false);
+      });
     }
   };
 
@@ -82,36 +104,69 @@ function SignUp() {
       <div className="rounded-3xl shadow-lg shadow-accent border-accent border-4 p-8 flex flex-col space-y-6 w-full max-w-md bg-white relative overflow-hidden">
         <div className="absolute -top-10 -right-10 w-32 h-32 bg-blue-400 opacity-20 rounded-full"></div>
         <div className="absolute -bottom-8 -left-8 w-24 h-24 bg-purple-400 opacity-20 rounded-full"></div>
-        
+
         <div className="flex items-center justify-between">
           <h2 className="text-3xl font-bold text-gray-800">Sign Up</h2>
           <UserPlus className="text-accent h-8 w-8" />
         </div>
-        
-        <p className="text-gray-600 text-sm">Create an account to get started with our services.</p>
-        
+
+        <p className="text-gray-600 text-sm">
+          Create an account to get started with our services.
+        </p>
+
         <form onSubmit={handleSubmit} className="space-y-5">
-          <div className="space-y-2">
-            <label className="text-sm font-medium text-gray-700 block">Full Name</label>
-            <div className="relative">
-              <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                <User className="h-5 w-5 text-gray-400" />
+          <div className="flex gap-4">
+            <div className="space-y-2 flex-1">
+              <label className="text-sm font-medium text-gray-700 block">
+                First Name
+              </label>
+              <div className="relative">
+                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                  <User className="h-5 w-5 text-gray-400" />
+                </div>
+                <input
+                  type="text"
+                  className={`block w-full pl-10 pr-3 py-2 border ${
+                    errors.firstName ? "border-red-500" : "border-gray-300"
+                  } rounded-lg focus:outline-none focus:ring-2 focus:ring-accent`}
+                  placeholder="John"
+                  value={firstName}
+                  onChange={(e) => setFirstName(e.target.value)}
+                />
               </div>
-              <input
-                type="text"
-                className={`block w-full pl-10 pr-3 py-2 border ${
-                  errors.name ? "border-red-500" : "border-gray-300"
-                } rounded-lg focus:outline-none focus:ring-2 focus:ring-accent`}
-                placeholder="John Doe"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-              />
+              {errors.firstName && (
+                <p className="text-red-500 text-xs mt-1">{errors.firstName}</p>
+              )}
             </div>
-            {errors.name && <p className="text-red-500 text-xs mt-1">{errors.name}</p>}
+
+            <div className="space-y-2 flex-1">
+              <label className="text-sm font-medium text-gray-700 block">
+                Last Name
+              </label>
+              <div className="relative">
+                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                  <User className="h-5 w-5 text-gray-400" />
+                </div>
+                <input
+                  type="text"
+                  className={`block w-full pl-10 pr-3 py-2 border ${
+                    errors.lastName ? "border-red-500" : "border-gray-300"
+                  } rounded-lg focus:outline-none focus:ring-2 focus:ring-accent`}
+                  placeholder="Doe"
+                  value={lastName}
+                  onChange={(e) => setLastName(e.target.value)}
+                />
+              </div>
+              {errors.lastName && (
+                <p className="text-red-500 text-xs mt-1">{errors.lastName}</p>
+              )}
+            </div>
           </div>
-          
+
           <div className="space-y-2">
-            <label className="text-sm font-medium text-gray-700 block">Email</label>
+            <label className="text-sm font-medium text-gray-700 block">
+              Email
+            </label>
             <div className="relative">
               <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                 <Mail className="h-5 w-5 text-gray-400" />
@@ -126,11 +181,15 @@ function SignUp() {
                 onChange={(e) => setEmail(e.target.value)}
               />
             </div>
-            {errors.email && <p className="text-red-500 text-xs mt-1">{errors.email}</p>}
+            {errors.email && (
+              <p className="text-red-500 text-xs mt-1">{errors.email}</p>
+            )}
           </div>
-          
+
           <div className="space-y-2">
-            <label className="text-sm font-medium text-gray-700 block">Password</label>
+            <label className="text-sm font-medium text-gray-700 block">
+              Password
+            </label>
             <div className="relative">
               <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                 <Lock className="h-5 w-5 text-gray-400" />
@@ -156,11 +215,15 @@ function SignUp() {
                 )}
               </button>
             </div>
-            {errors.password && <p className="text-red-500 text-xs mt-1">{errors.password}</p>}
+            {errors.password && (
+              <p className="text-red-500 text-xs mt-1">{errors.password}</p>
+            )}
           </div>
-          
+
           <div className="space-y-2">
-            <label className="text-sm font-medium text-gray-700 block">Confirm Password</label>
+            <label className="text-sm font-medium text-gray-700 block">
+              Confirm Password
+            </label>
             <div className="relative">
               <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                 <Lock className="h-5 w-5 text-gray-400" />
@@ -186,9 +249,13 @@ function SignUp() {
                 )}
               </button>
             </div>
-            {errors.confirmPassword && <p className="text-red-500 text-xs mt-1">{errors.confirmPassword}</p>}
+            {errors.confirmPassword && (
+              <p className="text-red-500 text-xs mt-1">
+                {errors.confirmPassword}
+              </p>
+            )}
           </div>
-          
+
           <div className="flex items-center">
             <input
               id="terms"
@@ -197,10 +264,17 @@ function SignUp() {
               className="h-4 w-4 text-accent focus:ring-accent border-gray-300 rounded"
             />
             <label htmlFor="terms" className="ml-2 block text-sm text-gray-700">
-              I agree to the <a href="#" className="text-accent hover:text-indigo-600">Terms of Service</a> and <a href="#" className="text-accent hover:text-indigo-600">Privacy Policy</a>
+              I agree to the{" "}
+              <a href="#" className="text-accent hover:text-indigo-600">
+                Terms of Service
+              </a>{" "}
+              and{" "}
+              <a href="#" className="text-accent hover:text-indigo-600">
+                Privacy Policy
+              </a>
             </label>
           </div>
-          
+
           <button
             type="submit"
             className="w-full flex justify-center py-2 px-4 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-accent hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-accent transition-all duration-200 relative overflow-hidden"
@@ -216,11 +290,14 @@ function SignUp() {
             )}
           </button>
         </form>
-        
+
         <div className="text-center mt-4">
           <p className="text-sm text-gray-600">
             Already have an account?{" "}
-            <Link to={"/sign-in"} className="font-medium text-accent hover:text-indigo-600 transition-all">
+            <Link
+              to={"/sign-in"}
+              className="font-medium text-accent hover:text-indigo-600 transition-all"
+            >
               Sign in
             </Link>
           </p>
