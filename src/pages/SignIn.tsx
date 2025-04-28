@@ -69,7 +69,6 @@ function SignIn() {
           setIsLoading(false);
         })
         .then((data) => {
-          console.log(data);
           setCookie("accessToken", data.token, {
             path: "/",
             secure: true,

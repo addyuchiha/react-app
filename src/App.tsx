@@ -5,6 +5,7 @@ import SignUp from "./pages/SignUp";
 import Dashboard from "./pages/Dashboard";
 import Success from "./pages/Success";
 import Cancel from "./pages/Cancel";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 const router = createBrowserRouter([
   {
@@ -21,16 +22,28 @@ const router = createBrowserRouter([
   },
   {
     path: "/dashboard",
-    element: <Dashboard />
+    element: (
+      <ProtectedRoute>
+        <Dashboard />
+      </ProtectedRoute>
+    ),
   },
   {
     path: "/payment/success",
-    element: <Success />
+    element: (
+      <ProtectedRoute>
+        <Success />
+      </ProtectedRoute>
+    ),
   },
   {
     path: "/payment/cancel",
-    element: <Cancel />
-  }
+    element: (
+      <ProtectedRoute>
+        <Cancel />
+      </ProtectedRoute>
+    ),
+  },
 ]);
 
 function App() {
