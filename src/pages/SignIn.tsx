@@ -1,10 +1,12 @@
 import { useState } from "react";
 import { Eye, EyeOff, LogIn, Lock, Mail } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
+import { useCookies } from "react-cookie";
 
 const API_BASE = import.meta.env.VITE_API_BASE_URL;
 
 function SignIn() {
+  const [cookies, setCookie] = useCookies(["accessToken", "refreshToken"]);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
@@ -49,27 +51,44 @@ function SignIn() {
           username: email,
           password: password,
         }),
-      }).then((response) => {
-        if (response.status == 401) {
-          const newErrors = { email: "", password: "" };
-          newErrors.email = "Invalid Credential"
-          newErrors.password = "Invalid Credential"
-          setErrors(newErrors)
-          setIsLoading(false)
-        } else if (!response.ok) {
-          setIsLoading(false)
+      })
+        .then((response) => {
+          if (response.status == 401) {
+            const newErrors = { email: "", password: "" };
+            newErrors.email = "Invalid Credential";
+            newErrors.password = "Invalid Credential";
+            setErrors(newErrors);
+            setIsLoading(false);
+          } else if (!response.ok) {
+            setIsLoading(false);
+            console.error(`Error submitting form data: ${response.status}`);
+            alert("Something went wrong please again try later.");
+          } else {
+            return response.json();
+          }
+          setIsLoading(false);
+        })
+        .then((data) => {
+          console.log(data);
+          setCookie("accessToken", data.token, {
+            path: "/",
+            secure: true,
+            sameSite: "strict",
+            maxAge: 3600, // 1 hour
+          });
+          setCookie('refreshToken', data.refresh_token, {
+            path: '/',
+            secure: true,
+            sameSite: 'strict',
+            maxAge: 30 * 24 * 3600 // 30 days
+          });
+          navigate("/dashboard")
+        })
+        .catch((response) => {
+          setIsLoading(false);
           console.error(`Error submitting form data: ${response.status}`);
           alert("Something went wrong please again try later.");
-        } else {
-          console.log("test")
-          navigate("/dashboard");
-        }
-        setIsLoading(false);
-      }).catch(response => {
-        setIsLoading(false)
-        console.error(`Error submitting form data: ${response.status}`);
-        alert("Something went wrong please again try later.");
-      });
+        });
     }
   };
 
