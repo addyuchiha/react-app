@@ -7,6 +7,8 @@ function getAuthToken() {
     if (!accessToken && refreshToken) {
         refreshAccessToken()
         accessToken = Cookies.get('accessToken');
+    } else if (!accessToken && !refreshToken) {
+        window.location.href = '/sign-in';
     }
     return accessToken
 }
