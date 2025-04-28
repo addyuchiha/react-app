@@ -17,12 +17,6 @@ dist-ssr/
 .next/
 out/
 
-# Tailwind CSS
-tailwind.config.js
-tailwind.config.cjs
-tailwind.config.mjs
-tailwind.config.ts
-
 # Environment variables
 .env
 .env.*.local
