@@ -59,10 +59,12 @@ function SignIn() {
             newErrors.password = "Invalid Credential";
             setErrors(newErrors);
             setIsLoading(false);
+            return
           } else if (!response.ok) {
             setIsLoading(false);
             console.error(`Error submitting form data: ${response.status}`);
             alert("Something went wrong please again try later.");
+            return
           } else {
             return response.json();
           }
