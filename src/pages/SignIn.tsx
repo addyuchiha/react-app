@@ -10,6 +10,7 @@ function SignIn() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const [rememberMe, setRememberMe] = useState(false)
   const [isLoading, setIsLoading] = useState(false);
   const [errors, setErrors] = useState({ email: "", password: "" });
   const navigate = useNavigate();
@@ -73,18 +74,32 @@ function SignIn() {
           }
 
           // Set cookies
-          setCookie("accessToken", data.token, {
-            path: "/",
-            secure: true,
-            sameSite: "strict",
-            maxAge: 3600, // 1 hour
-          });
-          setCookie('refreshToken', data.refresh_token, {
-            path: '/',
-            secure: true,
-            sameSite: 'strict',
-            maxAge: 30 * 24 * 3600 // 30 days
-          });
+          if (rememberMe) {
+            console.log(rememberMe)
+            setCookie("accessToken", data.token, {
+              path: "/",
+              secure: true,
+              sameSite: "strict",
+              expires: new Date(Date.now() + 3600 * 1000), // 1 hour from now
+            });
+            setCookie('refreshToken', data.refresh_token, {
+              path: '/',
+              secure: true,
+              sameSite: 'strict',
+              expires: new Date(Date.now() + 30 * 24 * 3600 * 1000) // 30 days from now
+            });
+          } else {
+            setCookie("accessToken", data.token, {
+              path: "/",
+              secure: true,
+              sameSite: "strict",
+            });
+            setCookie('refreshToken', data.refresh_token, {
+              path: '/',
+              secure: true,
+              sameSite: 'strict',
+            });
+          }
           
           navigate("/dashboard");
         })
@@ -183,16 +198,18 @@ function SignIn() {
           <div className="flex items-center justify-between">
             <div className="flex items-center">
               <input
-                id="remember-me"
-                name="remember-me"
-                type="checkbox"
-                className="h-4 w-4 text-accent focus:ring-accent border-gray-300 rounded"
+              id="remember-me"
+              name="remember-me"
+              type="checkbox"
+              checked={rememberMe}
+              onChange={(e) => setRememberMe(e.target.checked)}
+              className="h-4 w-4 text-accent focus:ring-accent border-gray-300 rounded"
               />
               <label
-                htmlFor="remember-me"
-                className="ml-2 block text-sm text-gray-700"
+              htmlFor="remember-me"
+              className="ml-2 block text-sm text-gray-700"
               >
-                Remember me
+              Remember me
               </label>
             </div>
             <a
