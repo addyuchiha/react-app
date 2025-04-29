@@ -11,6 +11,8 @@ interface FormErrors {
   message?: string;
 }
 
+const API_BASE = import.meta.env.VITE_API_BASE_URL;
+
 const ContactUs: React.FC = () => {
   const [formData, setFormData] = useState<FormData>({
     email: "",
@@ -63,7 +65,7 @@ const ContactUs: React.FC = () => {
     
     if (isValid) {
       console.log("Form submitted:", formData);
-      fetch("/api/notification/contact", {
+      fetch(`${API_BASE}/api/notification/contact`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
