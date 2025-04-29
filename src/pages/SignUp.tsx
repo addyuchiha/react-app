@@ -96,7 +96,7 @@ function SignUp() {
           }
   
           // Handle validation errors from server
-          if (response.status === 400 && data.errors) {
+          if (!response.ok && data.errors) {
             const newErrors = {
               firstName: "",
               lastName: "",
