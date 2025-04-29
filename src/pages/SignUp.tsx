@@ -75,27 +75,57 @@ function SignUp() {
     e.preventDefault();
     if (validateForm()) {
       setIsLoading(true);
-      // Make Register api call
       fetch(`${API_BASE}/api/register`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          firstName: firstName,
-          lastName: lastName,
-          email: email,
-          password: password,
+          firstName,
+          lastName,
+          email,
+          password,
         }),
-      }).then((response) => {
-        if (!response.ok) {
-          console.error(`Error submitting form data: ${response.status}`);
-          alert("Something went wrong please again try later.");
-        } else {
-          navigate("/sign-in");
-        }
-        setIsLoading(false);
-      });
+      })
+        .then(async (response) => {
+          const data = await response.json();
+          
+          if (response.ok) {
+            navigate("/sign-in");
+            return;
+          }
+  
+          // Handle validation errors from server
+          if (response.status === 400 && data.errors) {
+            const newErrors = {
+              firstName: "",
+              lastName: "",
+              email: "",
+              password: "",
+              confirmPassword: "",
+            };
+  
+            data.errors.forEach((err: { field: string; message: string }) => {
+              if (err.field in newErrors) {
+                newErrors[err.field as keyof typeof newErrors] = err.message;
+              }
+            });
+  
+            setErrors(newErrors);
+            throw new Error('Validation failed');
+          }
+  
+          // Handle other error cases
+          throw new Error(data.message || 'Something went wrong');
+        })
+        .catch((error) => {
+          if (error.message !== 'Validation failed') {
+            alert(error.message || 'An error occurred during registration');
+          }
+        })
+        .finally(() => {
+          setIsLoading(false);
+        });
     }
   };
 

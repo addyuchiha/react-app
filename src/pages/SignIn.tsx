@@ -53,24 +53,26 @@ function SignIn() {
         }),
       })
         .then((response) => {
-          if (response.status == 401) {
+          if (response.status === 401) {
             const newErrors = { email: "", password: "" };
-            newErrors.email = "Invalid Credential";
-            newErrors.password = "Invalid Credential";
+            newErrors.email = "Invalid email or password";
+            newErrors.password = "Invalid email or password";
             setErrors(newErrors);
-            setIsLoading(false);
-            return
-          } else if (!response.ok) {
-            setIsLoading(false);
-            console.error(`Error submitting form data: ${response.status}`);
-            alert("Something went wrong please again try later.");
-            return
-          } else {
-            return response.json();
+            throw new Error('Invalid credentials');
           }
-          setIsLoading(false);
+          
+          if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+          }
+          
+          return response.json();
         })
         .then((data) => {
+          if (!data.token || !data.refresh_token) {
+            throw new Error('Invalid response format');
+          }
+
+          // Set cookies
           setCookie("accessToken", data.token, {
             path: "/",
             secure: true,
@@ -83,12 +85,24 @@ function SignIn() {
             sameSite: 'strict',
             maxAge: 30 * 24 * 3600 // 30 days
           });
-          navigate("/dashboard")
+          
+          navigate("/dashboard");
         })
-        .catch((response) => {
+        .catch((error) => {
+          console.error('Error:', error);
+          if (error.message === 'Invalid credentials') {
+            // Already handled above
+          } else if (error.message === 'Invalid response format') {
+            alert("Server response format error. Please try again later.");
+          } else {
+            setErrors({
+              email: "An error occurred. Please try again.",
+              password: "An error occurred. Please try again."
+            });
+          }
+        })
+        .finally(() => {
           setIsLoading(false);
-          console.error(`Error submitting form data: ${response.status}`);
-          alert("Something went wrong please again try later.");
         });
     }
   };
