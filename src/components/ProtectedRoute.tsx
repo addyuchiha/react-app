@@ -1,6 +1,7 @@
 import { Navigate } from 'react-router-dom';
 import { useCookies } from 'react-cookie';
 import refreshAccessToken from '../scripts/auth/refreshAccessToken';
+import verifyAuthToken from '../scripts/auth/verifyAuthToken';
 
 interface ProtectedRouteProps {
   children: React.ReactNode;
@@ -14,6 +15,7 @@ const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
   } else if (!cookies.accessToken && cookies.refreshToken) {
     refreshAccessToken()
   }
+  verifyAuthToken()
   return <>{children}</>;
 };
 
