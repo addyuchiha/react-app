@@ -6,7 +6,6 @@ async function getAuthToken() {
     let accessToken = Cookies.get('accessToken');
     if (!accessToken && refreshToken) {
         await refreshAccessToken()
-        
         accessToken = Cookies.get('accessToken');
     } else if (!accessToken && !refreshToken) {
         window.location.href = '/sign-in';
