@@ -1,7 +1,10 @@
 import { Navigate } from 'react-router-dom';
 import { useCookies } from 'react-cookie';
+import { useEffect, useState } from 'react';
+import checkActiveSubscription from '../scripts/payments/checkSubscription';
+import DashboardSkeleton from './Skeleton';
 import refreshAccessToken from '../scripts/auth/refreshAccessToken';
-import verifyAuthToken from '../scripts/auth/verifyAuthToken';
+import PricingDecorator from './Pricing/PricingDecorator';
 
 interface ProtectedRouteProps {
   children: React.ReactNode;
@@ -9,13 +12,24 @@ interface ProtectedRouteProps {
 
 const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
   const [cookies] = useCookies(['accessToken', 'refreshToken']);
+  const [isSubscribed, setIsSubscribed] = useState<boolean | null>(null);
 
-  if (!cookies.accessToken && !cookies.refreshToken) {
-    return <Navigate to="/sign-in" replace />;
-  } else if (!cookies.accessToken && cookies.refreshToken) {
-    refreshAccessToken()
+  useEffect(() => {
+    const checkSubscription = async () => {
+      const status = await checkActiveSubscription();
+      setIsSubscribed(status);
+    };
+    checkSubscription();
+  }, [cookies.accessToken, cookies.refreshToken]);
+
+  if (isSubscribed === null) {
+    return <DashboardSkeleton />;
   }
-  verifyAuthToken()
+
+  if (!isSubscribed) {
+    return <PricingDecorator>{children}</PricingDecorator>;
+  }
+  
   return <>{children}</>;
 };
 

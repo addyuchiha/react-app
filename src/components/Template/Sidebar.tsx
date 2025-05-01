@@ -66,7 +66,7 @@ function Sidebar() {
           <div className="flex items-center">
             <div className="flex-shrink-0 transition-transform duration-300 ease-in-out">
               <img
-                src="public/vite.svg"
+                src="/vite.svg"
                 alt="Logo"
                 className={`h-8 w-8 rounded transition-all duration-300 ${
                   !isExpanded ? "scale-110" : ""

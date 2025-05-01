@@ -3,8 +3,9 @@ import getAuthToken from "./getAuthToken";
 
 const API_BASE = import.meta.env.VITE_API_BASE_URL;
 
-function verifyAuthToken() {
-    const accessToken = getAuthToken()
+async function verifyAuthToken() {
+    console.log("verifying")
+    const accessToken = await getAuthToken()
 
     fetch(`${API_BASE}/api/user/`, {
         method: "GET",
