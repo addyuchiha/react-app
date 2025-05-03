@@ -1,9 +1,7 @@
-import { Navigate } from 'react-router-dom';
 import { useCookies } from 'react-cookie';
 import { useEffect, useState } from 'react';
 import checkActiveSubscription from '../scripts/payments/checkSubscription';
 import DashboardSkeleton from './Skeleton';
-import refreshAccessToken from '../scripts/auth/refreshAccessToken';
 import PricingDecorator from './Pricing/PricingDecorator';
 
 interface ProtectedRouteProps {

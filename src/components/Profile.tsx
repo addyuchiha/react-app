@@ -1,10 +1,13 @@
 import { User } from "lucide-react";
 
+import useState from "../scripts/auth/useState";
+
 interface Props {
   isExpanded: boolean
 }
 
 const Profile = ({ isExpanded }: Props) => {
+  const user = useState()
   return (
     <div className={`flex items-center rounded hover:bg-gray-700 transition-all cursor-pointer w-full ${isExpanded ? "p-2": "p-0"}`}>
       <div className="min-w-8 h-8 rounded-full bg-accent flex items-center justify-center">
@@ -15,8 +18,8 @@ const Profile = ({ isExpanded }: Props) => {
           isExpanded ? "opacity-100 max-w-full" : "opacity-0 max-w-0"
         }`}
       >
-        <div className="font-medium">John Doe</div>
-        <div className="text-xs text-gray-300">john@example.com</div>
+        <div className="font-medium text-ellipsis overflow-hidden whitespace-nowrap">{`${user.firstName} ${user.lastName}`}</div>
+        <div className="text-xs text-gray-300 text-ellipsis overflow-hidden whitespace-nowrap">{user.email}</div>
       </div>
     </div>
   );

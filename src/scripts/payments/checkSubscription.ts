@@ -17,11 +17,12 @@ async function checkActiveSubscription() {
         });
 
         if (response.status === 401) {
-            // window.location.href = "/sign-in"
+            window.location.href = "/sign-in"
             return false;
         }
 
         const data = await response.json();
+        sessionStorage.setItem("user", JSON.stringify(data))
         return Boolean(data.subscriptionId);
 
     } catch (error) {
