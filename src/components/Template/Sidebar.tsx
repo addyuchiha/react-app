@@ -2,30 +2,28 @@ import { useState } from "react";
 import {
   ChevronLeft,
   ChevronRight,
-  Home,
   LayoutDashboard,
-  FolderGit2,
-  CheckSquare,
-  Settings,
+  Album,
+  Star,
 } from "lucide-react";
+
+import Profile from "../Profile";
+import StorageQuota from "../StorageQuota";
 
 function Sidebar() {
   const [isExpanded, setIsExpanded] = useState(false);
   const [isPinned, setIsPinned] = useState(false);
-  // Add visibility state for smoother text transitions
   const [textVisible, setTextVisible] = useState(false);
 
   const handleMouseEnter = () => {
     if (!isPinned) {
       setIsExpanded(true);
-      // Delay showing text until sidebar has expanded a bit
       setTimeout(() => setTextVisible(true), 150);
     }
   };
 
   const handleMouseLeave = () => {
     if (!isPinned) {
-      // Hide text first before collapsing
       setTextVisible(false);
       setTimeout(() => setIsExpanded(false), 150);
     }
@@ -36,7 +34,6 @@ function Sidebar() {
     setIsPinned(newPinnedState);
 
     if (!newPinnedState) {
-      // When unpinning, hide text first before collapsing
       setTextVisible(false);
       setTimeout(() => setIsExpanded(false), 150);
     } else {
@@ -46,11 +43,9 @@ function Sidebar() {
   };
 
   const navItems = [
-    { name: "Home", icon: <Home size={20} /> },
     { name: "Dashboard", icon: <LayoutDashboard size={20} /> },
-    { name: "Projects", icon: <FolderGit2 size={20} /> },
-    { name: "Tasks", icon: <CheckSquare size={20} /> },
-    { name: "Settings", icon: <Settings size={20} /> },
+    { name: "Gallery", icon: <Album size={20} /> },
+    { name: "Favourites", icon: <Star size={20} /> },
   ];
 
   return (
@@ -93,12 +88,12 @@ function Sidebar() {
         </div>
 
         <nav className="w-full">
-          <ul className="space-y-4 p-4">
+          <ul className="space-y-4">
             {navItems.map((item) => (
               <li
                 key={item.name}
                 className={`flex items-center p-2 rounded hover:bg-gray-700 cursor-pointer transition-all duration-200 ${
-                  !isExpanded ? "justify-center" : ""
+                  !isExpanded ? "justify-start" : ""
                 }`}
               >
                 <div
@@ -110,7 +105,7 @@ function Sidebar() {
                 </div>
                 <span
                   className={`ml-3 whitespace-nowrap transition-all duration-300 overflow-hidden ${
-                    textVisible ? "opacity-100 max-w-full" : "opacity-0 max-w-0"
+                    isExpanded ? "opacity-100 max-w-full" : "opacity-0 max-w-0"
                   }`}
                 >
                   {item.name}
@@ -119,6 +114,12 @@ function Sidebar() {
             ))}
           </ul>
         </nav>
+
+        <div className="mt-auto w-full">
+          <StorageQuota isExpanded={isExpanded} />
+          <div className="border-t border-gray-700 my-4"></div>
+          <Profile isExpanded={isExpanded} />
+        </div>
       </div>
     </header>
   );
