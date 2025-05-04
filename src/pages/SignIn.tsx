@@ -212,12 +212,12 @@ function SignIn() {
               Remember me
               </label>
             </div>
-            <a
-              href="#"
+            <Link
+              to={"/forgot-password"}
               className="text-sm font-medium text-accent hover:text-accent"
             >
               Forgot password?
-            </a>
+            </Link>
           </div>
 
           <button
