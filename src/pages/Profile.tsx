@@ -9,7 +9,7 @@ interface Props {
 
 export default function Profile({active, children}: Props) {
   return (
-    <Template heading={undefined}>
+    <Template active="profile" heading={undefined}>
       <div className="flex flex-grow space-x-4">
         {children}
         <Details active={active} />
