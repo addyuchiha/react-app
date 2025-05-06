@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Eye, EyeOff, UserPlus, Lock, Mail, User } from "lucide-react";
-import { Link, redirect, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const API_BASE = import.meta.env.VITE_API_BASE_URL;
 
