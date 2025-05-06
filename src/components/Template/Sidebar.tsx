@@ -11,7 +11,11 @@ import Profile from "../Profile";
 import StorageQuota from "../StorageQuota";
 import { Link } from "react-router-dom";
 
-function Sidebar() {
+interface Props {
+  active: string;
+}
+
+function Sidebar({ active }: Props) {
   const [isExpanded, setIsExpanded] = useState(false);
   const [isPinned, setIsPinned] = useState(false);
   const [textVisible, setTextVisible] = useState(false);
@@ -44,7 +48,11 @@ function Sidebar() {
   };
 
   const navItems = [
-    { name: "Dashboard", icon: <LayoutDashboard size={20} />, link: "/dashboard" },
+    {
+      name: "Dashboard",
+      icon: <LayoutDashboard size={20} />,
+      link: "/dashboard",
+    },
     { name: "Gallery", icon: <Album size={20} />, link: "/album" },
     { name: "Favourites", icon: <Star size={20} />, link: "/favourites" },
   ];
@@ -53,7 +61,7 @@ function Sidebar() {
     <header className="flex h-screen w-min">
       <div
         className={`transition-all duration-300 ease-in-out bg-primary text-white flex flex-col flex-grow p-6 m-4 rounded-xl shadow-lg ${
-          isExpanded ? "w-64 items-start" : "w-20 items-center"
+          isExpanded ? "w-64 items-start" : "w-[84px] items-center"
         }`}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
@@ -91,11 +99,16 @@ function Sidebar() {
         <nav className="w-full">
           <ul className="space-y-4">
             {navItems.map((item) => (
-              <Link to={item.link}
+              <Link
+                to={item.link}
                 key={item.name}
-                className={`flex items-center p-2 rounded hover:bg-gray-700 cursor-pointer transition-all duration-200 ${
-                  !isExpanded ? "justify-start" : ""
-                }`}
+                className={`flex items-center p-2 rounded transition-all duration-200 
+                  ${!isExpanded ? "justify-start" : ""}
+                  ${
+                    active === item.name.toLowerCase()
+                      ? "bg-gray-700 text-white"
+                      : "hover:bg-gray-700/50"
+                  }`}
               >
                 <div
                   className={`flex items-center justify-center transition-all duration-300 ${

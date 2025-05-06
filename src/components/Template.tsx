@@ -2,14 +2,15 @@ import { ReactNode } from "react";
 import Sidebar from "./Template/Sidebar";
 
 interface Props {
+  active: string
   heading: string | undefined;
   children: ReactNode;
 }
 
-function Template({ heading, children }: Props) {
+function Template({ active, heading, children }: Props) {
   return (
     <div className="flex bg-bgLight">
-      <Sidebar />
+      <Sidebar active={active} />
       <div className="w-full">
         <div className="p-4 pl-0 space-y-4 h-screen flex flex-col">
           {heading ? (

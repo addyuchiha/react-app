@@ -2,7 +2,7 @@ import Template from "../components/Template"
 
 function Dashboard() {
   return (
-    <Template heading="Dashboard" />
+    <Template active="dashboard" heading="Dashboard" />
   )
 }
 
