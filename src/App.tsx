@@ -1,11 +1,17 @@
 import HomePage from "./pages/HomePage";
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { createBrowserRouter, Navigate, RouterProvider } from "react-router-dom";
 import SignIn from "./pages/SignIn";
 import SignUp from "./pages/SignUp";
 import Dashboard from "./pages/Dashboard";
 import Success from "./pages/Success";
 import Cancel from "./pages/Cancel";
 import ProtectedRoute from "./components/ProtectedRoute";
+import ForgotPassword from "./pages/ForgotPassword";
+import VerifyCode from "./pages/VerifyCode";
+import ResetPassword from "./pages/ResetPassword";
+import Profile from "./pages/Profile";
+import PaymentHistory from "./components/Profile/PaymentDetails";
+import SubscriptionDetails from "./components/Profile/SubscriptionDetails";
 
 const router = createBrowserRouter([
   {
@@ -19,6 +25,18 @@ const router = createBrowserRouter([
   {
     path: "/sign-up",
     element: <SignUp />,
+  },
+  {
+    path: "/forgot-password",
+    element: <ForgotPassword />,
+  },
+  {
+    path: "/verify-code",
+    element: <VerifyCode />,
+  },
+  {
+    path: "/reset-password",
+    element: <ResetPassword />,
   },
   {
     path: "/dashboard",
@@ -41,6 +59,34 @@ const router = createBrowserRouter([
     element: (
       <ProtectedRoute>
         <Cancel />
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: "/profile",
+    element: (
+      <ProtectedRoute>
+        <Navigate to={"/profile/payment-history"} />
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: "/profile/payment-history",
+    element: (
+      <ProtectedRoute>
+        <Profile active="payment-history">
+          <PaymentHistory />
+        </Profile>
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: "/profile/subscription",
+    element: (
+      <ProtectedRoute>
+        <Profile active="subscription">
+          <SubscriptionDetails />
+        </Profile>
       </ProtectedRoute>
     ),
   },

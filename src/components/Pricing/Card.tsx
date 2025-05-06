@@ -32,7 +32,7 @@ function Card({ type, price, features, priceID }: Props) {
   };
 
   return (
-    <div className="rounded-3xl shadow-lg shadow-accent border-accent border-4 p-8 flex flex-col space-y-4 items-center">
+    <div className="rounded-3xl shadow-lg shadow-accent border-accent border-4 p-8 flex flex-col space-y-4 items-center bg-bgLight">
       <span className="rounded-full text-white bg-primary p-3 py-1 text-sm w-min font-semibold">
         {type}
       </span>

@@ -2,10 +2,11 @@ import Cookies from 'js-cookie';
 
 const API_BASE = import.meta.env.VITE_API_BASE_URL;
 
-function refreshAccessToken() {
+async function refreshAccessToken() {
     const refreshToken = Cookies.get('refreshToken');
+    console.log("refreshing")
     
-    return fetch(`${API_BASE}/api/token/refresh`, {
+    return await fetch(`${API_BASE}/api/token/refresh`, {
         method: "POST",
         headers: {
             'Content-Type': 'application/json'
@@ -23,8 +24,10 @@ function refreshAccessToken() {
         Cookies.set('accessToken', data.token, {
             expires: 1/24, // 1 hour
             secure: true,
-            sameSite: 'strict'
+            sameSite: 'strict',
+            path: '/'
         });
+        console.log("set successfully")
         return data;
     });
 }
