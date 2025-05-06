@@ -9,6 +9,7 @@ import {
 
 import Profile from "../Profile";
 import StorageQuota from "../StorageQuota";
+import { Link } from "react-router-dom";
 
 function Sidebar() {
   const [isExpanded, setIsExpanded] = useState(false);
@@ -43,9 +44,9 @@ function Sidebar() {
   };
 
   const navItems = [
-    { name: "Dashboard", icon: <LayoutDashboard size={20} /> },
-    { name: "Gallery", icon: <Album size={20} /> },
-    { name: "Favourites", icon: <Star size={20} /> },
+    { name: "Dashboard", icon: <LayoutDashboard size={20} />, link: "/dashboard" },
+    { name: "Gallery", icon: <Album size={20} />, link: "/album" },
+    { name: "Favourites", icon: <Star size={20} />, link: "/favourites" },
   ];
 
   return (
@@ -90,7 +91,7 @@ function Sidebar() {
         <nav className="w-full">
           <ul className="space-y-4">
             {navItems.map((item) => (
-              <li
+              <Link to={item.link}
                 key={item.name}
                 className={`flex items-center p-2 rounded hover:bg-gray-700 cursor-pointer transition-all duration-200 ${
                   !isExpanded ? "justify-start" : ""
@@ -110,7 +111,7 @@ function Sidebar() {
                 >
                   {item.name}
                 </span>
-              </li>
+              </Link>
             ))}
           </ul>
         </nav>

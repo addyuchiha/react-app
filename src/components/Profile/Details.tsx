@@ -3,7 +3,11 @@ import useState from "../../scripts/auth/useState";
 import { LogOut, User2 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
-export default function Details() {
+interface Props {
+  active: string;
+}
+
+export default function Details({ active }: Props) {
   const user = useState();
   const navigate = useNavigate();
 
@@ -27,6 +31,24 @@ export default function Details() {
         </div>
       </div>
       <div className="h-[1px] bg-accent/20 my-8" />
+      <nav className="flex flex-col gap-4">
+        <button
+          onClick={() => navigate("/profile/payment-history")}
+          className={`text-white hover:bg-accent/20 px-4 py-2 rounded-lg transition-colors text-left ${
+            active === "payment-history" ? "bg-accent/20" : ""
+          }`}
+        >
+          Payment History
+        </button>
+        <button
+          onClick={() => navigate("/profile/subscription")}
+          className={`text-white hover:bg-accent/20 px-4 py-2 rounded-lg transition-colors text-left ${
+            active === "subscription" ? "bg-accent/20" : ""
+          }`}
+        >
+          Subscription
+        </button>
+      </nav>
       <button
         onClick={signOut}
         className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg transition-colors font-medium flex justify-center items-center gap-2 mt-auto"

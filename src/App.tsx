@@ -1,5 +1,5 @@
 import HomePage from "./pages/HomePage";
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { createBrowserRouter, Navigate, RouterProvider } from "react-router-dom";
 import SignIn from "./pages/SignIn";
 import SignUp from "./pages/SignUp";
 import Dashboard from "./pages/Dashboard";
@@ -10,6 +10,7 @@ import ForgotPassword from "./pages/ForgotPassword";
 import VerifyCode from "./pages/VerifyCode";
 import ResetPassword from "./pages/ResetPassword";
 import Profile from "./pages/Profile";
+import PaymentHistory from "./components/Profile/PaymentDetails";
 
 const router = createBrowserRouter([
   {
@@ -26,15 +27,15 @@ const router = createBrowserRouter([
   },
   {
     path: "/forgot-password",
-    element: <ForgotPassword />
+    element: <ForgotPassword />,
   },
   {
     path: "/verify-code",
-    element: <VerifyCode />
+    element: <VerifyCode />,
   },
   {
     path: "/reset-password",
-    element: <ResetPassword />
+    element: <ResetPassword />,
   },
   {
     path: "/dashboard",
@@ -64,7 +65,17 @@ const router = createBrowserRouter([
     path: "/profile",
     element: (
       <ProtectedRoute>
-        <Profile />
+        <Navigate to={"/profile/payment-history"} />
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: "/profile/payment-history",
+    element: (
+      <ProtectedRoute>
+        <Profile active="payment-history">
+          <PaymentHistory />
+        </Profile>
       </ProtectedRoute>
     ),
   },
