@@ -9,9 +9,6 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import ForgotPassword from "./pages/ForgotPassword";
 import VerifyCode from "./pages/VerifyCode";
 import ResetPassword from "./pages/ResetPassword";
-import Profile from "./pages/Profile";
-import PaymentHistory from "./components/Profile/PaymentDetails";
-import SubscriptionDetails from "./components/Profile/SubscriptionDetails";
 
 const router = createBrowserRouter([
   {
