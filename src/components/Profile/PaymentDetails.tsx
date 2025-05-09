@@ -86,7 +86,7 @@ export default function PaymentHistory() {
       )}
 
       {paymentsDetails && (
-        <div className="divide-y divide-gray-200">
+        <div className="divide-y divide-gray-200 overflow-y-auto max-h-[500px]">
           {paymentsDetails.map((payment) => (
             <div
               key={payment.number}

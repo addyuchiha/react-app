@@ -73,7 +73,6 @@ function SignIn() {
             throw new Error('Invalid response format');
           }
 
-          // Set cookies
           if (rememberMe) {
             console.log(rememberMe)
             setCookie("accessToken", data.token, {

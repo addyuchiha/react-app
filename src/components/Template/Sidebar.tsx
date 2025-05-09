@@ -7,7 +7,7 @@ import {
   Star,
 } from "lucide-react";
 
-import Profile from "../Profile";
+import Profile from "../Profile/Profile";
 import StorageQuota from "../StorageQuota";
 import { Link } from "react-router-dom";
 
@@ -132,7 +132,7 @@ function Sidebar({ active }: Props) {
         <div className="mt-auto w-full">
           <StorageQuota isExpanded={isExpanded} />
           <div className="border-t border-gray-700 my-4"></div>
-          <Profile isExpanded={isExpanded} />
+          <Profile isExpanded={isExpanded} togglePin={togglePin} />
         </div>
       </div>
     </header>

@@ -122,21 +122,21 @@ export default function SubscriptionDetails() {
   };
 
   return (
-    <div className="w-full bg-white rounded-xl border shadow-sm">
+    <div className="w-full bg-gray-800 rounded-xl border border-gray-700 shadow-lg">
       <div className="rounded-xl overflow-hidden">
-        <div className="p-6 border-b">
-          <h2 className="text-2xl font-bold">Your Subscription</h2>
+        <div className="p-6 border-b border-gray-700">
+          <h2 className="text-2xl font-bold text-white">Your Subscription</h2>
         </div>
 
         {isLoading && (
           <div className="flex justify-center items-center p-12">
-            <div className="animate-spin rounded-full h-10 w-10 border-4 border-blue-500 border-t-transparent"></div>
+            <div className="animate-spin rounded-full h-10 w-10 border-4 border-accent border-t-transparent"></div>
           </div>
         )}
 
         {error && (
-          <div className="p-6 bg-red-50">
-            <p className="text-red-600 font-medium text-center">{error}</p>
+          <div className="p-6 bg-red-900/20">
+            <p className="text-red-400 font-medium text-center">{error}</p>
           </div>
         )}
 
@@ -148,21 +148,21 @@ export default function SubscriptionDetails() {
                   <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
                     <div className="space-y-2">
                       <div className="flex items-center space-x-3">
-                        <h3 className="text-2xl font-bold text-gray-900">
+                        <h3 className="text-2xl font-bold text-white">
                           {getProductName(item.product_code)}
                         </h3>
                         <span
                           className={`px-3 py-1 rounded-full text-sm font-medium ${
                             sub.canceled_at
-                              ? "bg-red-100 text-red-800"
-                              : "bg-green-100 text-green-800"
+                              ? "bg-red-900/20 text-red-400"
+                              : "bg-green-900/20 text-green-400"
                           }`}
                         >
                           {sub.canceled_at ? "Canceling" : "Active"}
                         </span>
                       </div>
-                      <p className="text-gray-600">Current billing period</p>
-                      <p className="text-lg font-semibold text-gray-800">
+                      <p className="text-gray-400">Current billing period</p>
+                      <p className="text-lg font-semibold text-gray-200">
                         {formatDate(item.period_start)} -{" "}
                         {formatDate(item.period_end)}
                       </p>
@@ -170,8 +170,8 @@ export default function SubscriptionDetails() {
                   </div>
 
                   {sub.canceled_at ? (
-                    <div className="p-4 bg-red-50 rounded-lg border border-red-100">
-                      <p className="text-red-700 flex items-center">
+                    <div className="p-4 bg-red-900/20 rounded-lg border border-red-800">
+                      <p className="text-red-400 flex items-center">
                         <svg
                           className="w-5 h-5 mr-2"
                           fill="currentColor"
@@ -189,7 +189,7 @@ export default function SubscriptionDetails() {
                   ) : (
                     <button
                       onClick={() => openCancelDialog(subId)}
-                      className="w-full md:w-auto px-6 py-3 bg-white border-2 border-red-500 text-red-500 rounded-lg hover:bg-red-50 transition-colors text-sm font-medium flex items-center justify-center space-x-2"
+                      className="w-full md:w-auto px-6 py-3 bg-gray-800 border-2 border-red-500 text-red-400 rounded-lg hover:bg-red-900/20 transition-colors text-sm font-medium flex items-center justify-center space-x-2"
                     >
                       <svg
                         className="w-4 h-4"
@@ -214,27 +214,28 @@ export default function SubscriptionDetails() {
 
         {subscription && Object.keys(subscription.active).length === 0 && (
           <div className="p-8 text-center">
-            <p className="text-gray-500 mb-4">No active subscriptions found.</p>
-            <button className="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-sm font-medium">
+            <p className="text-gray-400 mb-4">No active subscriptions found.</p>
+            <button className="px-6 py-3 bg-accent text-white rounded-lg hover:bg-accent/80 transition-colors text-sm font-medium">
               Subscribe Now
             </button>
           </div>
         )}
       </div>
+
       {showConfirmDialog && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
-          <div className="bg-white rounded-lg max-w-md w-full p-6 shadow-xl">
-            <h3 className="text-xl font-semibold text-gray-900 mb-4">
+        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4 z-50">
+          <div className="bg-gray-800 rounded-lg max-w-md w-full p-6 shadow-xl border border-gray-700">
+            <h3 className="text-xl font-semibold text-white mb-4">
               Cancel Subscription?
             </h3>
-            <p className="text-gray-600 mb-6">
+            <p className="text-gray-300 mb-6">
               Are you sure you want to cancel your subscription? You'll continue
               to have access until the end of your current billing period.
             </p>
             <div className="flex space-x-4">
               <button
                 onClick={() => setShowConfirmDialog(false)}
-                className="flex-1 px-4 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors font-medium"
+                className="flex-1 px-4 py-2 bg-gray-700 text-gray-200 rounded-lg hover:bg-gray-600 transition-colors font-medium"
               >
                 Keep Subscription
               </button>

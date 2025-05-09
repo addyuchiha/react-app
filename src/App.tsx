@@ -61,35 +61,7 @@ const router = createBrowserRouter([
         <Cancel />
       </ProtectedRoute>
     ),
-  },
-  {
-    path: "/profile",
-    element: (
-      <ProtectedRoute>
-        <Navigate to={"/profile/payment-history"} />
-      </ProtectedRoute>
-    ),
-  },
-  {
-    path: "/profile/payment-history",
-    element: (
-      <ProtectedRoute>
-        <Profile active="payment-history">
-          <PaymentHistory />
-        </Profile>
-      </ProtectedRoute>
-    ),
-  },
-  {
-    path: "/profile/subscription",
-    element: (
-      <ProtectedRoute>
-        <Profile active="subscription">
-          <SubscriptionDetails />
-        </Profile>
-      </ProtectedRoute>
-    ),
-  },
+  }
 ]);
 
 function App() {
