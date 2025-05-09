@@ -86,7 +86,7 @@ const ContactUs: React.FC = () => {
   };
   
   return (
-    <div className="flex justify-center items-center w-full md:p-6">
+    <div id="contact-us" className="flex justify-center items-center w-full md:p-6">
       <div className="bg-gray-900 rounded-3xl text-white p-8 shadow-xl w-full max-w-2xl border border-gray-800">
         <h1 className="text-4xl font-bold text-center mb-8">Contact Us</h1>
         

@@ -18,25 +18,31 @@ const Navbar = () => {
             {/* Desktop Navigation */}
             <ul className="hidden md:flex space-x-6 text-sm items-center justify-center">
               <a
-                href="#"
+                href="#hero"
                 className="text-center hover:brightness-90 transition-all"
               >
                 Home
               </a>
               <a
-                href="#"
+                href="#usage"
+                className="text-center hover:brightness-90 transition-all"
+              >
+                Usage
+              </a>
+              <a
+                href="#features"
+                className="text-center hover:brightness-90 transition-all"
+              >
+                Features
+              </a>
+              <a
+                href="#pricing"
                 className="text-center hover:brightness-90 transition-all"
               >
                 Pricing
               </a>
               <a
-                href="#"
-                className="text-center hover:brightness-90 transition-all"
-              >
-                About
-              </a>
-              <a
-                href="#"
+                href="#contact-us"
                 className="text-center hover:brightness-90 transition-all"
               >
                 Contact
