@@ -3,7 +3,7 @@ import HeroImages from "./HeroImages";
 
 const Hero = () => {
   return (
-    <section className="max-w-5xl mx-auto flex justify-center flex-col md:grid grid-cols-2 h-screen items-center text-textMain">
+    <section id="hero" className="max-w-5xl mx-auto flex justify-center flex-col md:grid grid-cols-2 h-screen items-center text-textMain">
       <div className="space-y-4">
         <h1 className="text-6xl font-bold">Lorem <span className="text-accent">ipsum</span> dolor sit amet.</h1>
         <span className="block">

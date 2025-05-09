@@ -72,12 +72,12 @@ const HowToUse = () => {
     },
   ]
   return (
-    <>
+    <section id="usage">
       <h1 className="text-6xl font-bold text-center mt-24">How To Use</h1>
       <div className="container px-5 py-24 mx-auto flex flex-wrap">
         {steps.map((step, index) => <Step step={index + 1} icon={step.icon} heading={step.heading} text={step.text} />)}
       </div>
-    </>
+    </section>
   );
 };
 

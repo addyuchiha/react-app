@@ -14,7 +14,7 @@ const HomePage = () => {
         <Hero />
         <HowToUse />
         <Features />
-        <Pricing />
+        <Pricing noTitle={false} />
         <ContactUs />
       </main>
       <Footer />
