@@ -5,6 +5,44 @@
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Vite + React + TS</title>
+    <style>
+      /* Webkit Scrollbar Styles */
+      ::-webkit-scrollbar {
+        width: 8px;
+        height: 8px;
+      }
+    
+      ::-webkit-scrollbar-thumb {
+        background: #4b5563;
+        border-radius: 4px;
+      }
+    
+      ::-webkit-scrollbar-thumb:hover {
+        background: #6b7280;
+      }
+    
+      /* Hide all scroll buttons/arrows */
+      ::-webkit-scrollbar-button:start:decrement,
+      ::-webkit-scrollbar-button:end:increment {
+        display: none;
+        height: 0;
+        width: 0;
+      }
+    
+      ::-webkit-scrollbar-button:vertical:decrement {
+        display: none;
+      }
+    
+      ::-webkit-scrollbar-button:vertical:increment {
+        display: none;
+      }
+    
+      /* Firefox */
+      * {
+        scrollbar-width: thin;
+        scrollbar-color: #4b5563 transparent;
+      }
+    </style>
   </head>
   <body>
     <div id="root"></div>
