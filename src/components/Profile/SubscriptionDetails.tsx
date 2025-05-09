@@ -122,12 +122,8 @@ export default function SubscriptionDetails() {
   };
 
   return (
-    <div className="w-full bg-gray-800 rounded-xl border border-gray-700 shadow-lg">
+    <div className="w-full bg-gray-800 rounded-xl border border-gray-700 shadow-lg my-4">
       <div className="rounded-xl overflow-hidden">
-        <div className="p-6 border-b border-gray-700">
-          <h2 className="text-2xl font-bold text-white">Your Subscription</h2>
-        </div>
-
         {isLoading && (
           <div className="flex justify-center items-center p-12">
             <div className="animate-spin rounded-full h-10 w-10 border-4 border-accent border-t-transparent"></div>
@@ -142,17 +138,17 @@ export default function SubscriptionDetails() {
 
         {subscription &&
           Object.entries(subscription.active).map(([subId, sub]) => (
-            <div key={subId} className="p-8">
+            <div key={subId} className="p-6">
               {Object.values(sub.items).map((item, index) => (
                 <div key={index} className="space-y-6">
                   <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
                     <div className="space-y-2">
                       <div className="flex items-center space-x-3">
-                        <h3 className="text-2xl font-bold text-white">
+                        <h3 className="text-lg font-bold text-white">
                           {getProductName(item.product_code)}
                         </h3>
                         <span
-                          className={`px-3 py-1 rounded-full text-sm font-medium ${
+                          className={`px-3 py-1 rounded-full text-xs font-medium ${
                             sub.canceled_at
                               ? "bg-red-900/20 text-red-400"
                               : "bg-green-900/20 text-green-400"
@@ -161,8 +157,8 @@ export default function SubscriptionDetails() {
                           {sub.canceled_at ? "Canceling" : "Active"}
                         </span>
                       </div>
-                      <p className="text-gray-400">Current billing period</p>
-                      <p className="text-lg font-semibold text-gray-200">
+                      <p className="text-gray-400 text-sm">Current billing period</p>
+                      <p className="font-semibold text-gray-200">
                         {formatDate(item.period_start)} -{" "}
                         {formatDate(item.period_end)}
                       </p>

@@ -15,7 +15,7 @@ export default function Details() {
   };
 
   return (
-    <div className="bg-primary p-8 rounded-xl flex flex-grow flex-col">
+    <div className="bg-primary p-4 rounded-xl flex flex-grow flex-col">
       <div className="flex items-center h-min text-white space-x-4">
         <div className="rounded-full bg-accent flex items-center justify-center p-3 w-12 h-12">
           <User2 size={24} />
@@ -27,11 +27,10 @@ export default function Details() {
           <span className="font-thin">{user.email}</span>
         </div>
       </div>
-      <div className="h-[1px] bg-accent/20 my-8" />
       <SubscriptionDetails />
       <button
         onClick={signOut}
-        className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg transition-colors font-medium flex justify-center items-center gap-2 mt-8"
+        className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg transition-colors font-medium flex justify-center items-center gap-2"
       >
         <LogOut size={18} />
         SignOut

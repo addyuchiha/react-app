@@ -69,8 +69,8 @@ export default function PaymentHistory() {
 
   return (
     <div className="w-full bg-white rounded-xl border shadow-sm">
-      <div className="p-6 border-b">
-        <h2 className="text-2xl font-bold text-gray-800">Payment History</h2>
+      <div className="p-4 border-b">
+        <h2 className="text-lg font-bold text-gray-800">Payment History</h2>
       </div>
 
       {isLoading && (
@@ -86,7 +86,7 @@ export default function PaymentHistory() {
       )}
 
       {paymentsDetails && (
-        <div className="divide-y divide-gray-200 overflow-y-auto max-h-[500px]">
+        <div className="divide-y divide-gray-200 overflow-y-auto max-h-[313px]">
           {paymentsDetails.map((payment) => (
             <div
               key={payment.number}

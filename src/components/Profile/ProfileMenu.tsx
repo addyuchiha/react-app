@@ -9,7 +9,7 @@ const ProfileMenu = ({ onClose }: { onClose: () => void }) => {
 
   return (
     <div className="fixed inset-0 bg-black/50 z-50 backdrop-blur flex justify-center items-center">
-      <div className="bg-bgLight p-8 text-black rounded-xl">
+      <div className="bg-bgLight p-6 text-black rounded-xl">
         <div className="flex justify-between items-center">
           <span className="font-bold text-xl">Profile Menu</span>
           <X className="cursor-pointer hover:text-gray-600" onClick={onClose} />
