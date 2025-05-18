@@ -10,6 +10,7 @@ interface ValidationErrors {
 interface Props {
   setState: (state: boolean) => void;
   onSuccess?: (galleryId?: string) => void;
+  onCreated: () => void
 }
 
 interface ApiResponse {
@@ -25,7 +26,7 @@ type GalleryFormData = {
   sessionDate: number
 };
 
-function CreateGallery({ setState, onSuccess }: Props) {
+function CreateGallery({ setState, onSuccess, onCreated }: Props) {
   const [formData, setFormData] = useState<GalleryFormData>({
     name: "",
     description: "",
@@ -127,15 +128,13 @@ function CreateGallery({ setState, onSuccess }: Props) {
         throw new Error(data.message || "Failed to create gallery");
       }
 
-      // Show success state on button
       setSuccessState(true);
-      
-      // Close after short delay
       setTimeout(() => {
         if (onSuccess) {
           onSuccess(data.galleryId);
         }
         handleClose();
+        onCreated?.();
       }, 1500);
 
     } catch (err) {

@@ -1,15 +1,15 @@
-import { useCookies } from 'react-cookie';
-import { useEffect, useState } from 'react';
-import checkActiveSubscription from '../scripts/payments/checkSubscription';
-import DashboardSkeleton from './Skeleton';
-import PricingDecorator from './Pricing/PricingDecorator';
+import { useCookies } from "react-cookie";
+import { useEffect, useState } from "react";
+import checkActiveSubscription from "../scripts/payments/checkSubscription";
+import DashboardSkeleton from "./Skeleton/Skeleton";
+import PricingDecorator from "./Pricing/PricingDecorator";
 
 interface ProtectedRouteProps {
   children: React.ReactNode;
 }
 
 const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
-  const [cookies] = useCookies(['accessToken', 'refreshToken']);
+  const [cookies] = useCookies(["accessToken", "refreshToken"]);
   const [isSubscribed, setIsSubscribed] = useState<boolean | null>(null);
 
   useEffect(() => {
@@ -27,7 +27,7 @@ const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
   if (!isSubscribed) {
     return <PricingDecorator>{children}</PricingDecorator>;
   }
-  
+
   return <>{children}</>;
 };
 
