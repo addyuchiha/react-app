@@ -1,14 +1,16 @@
 import { useState } from "react";
 import { Edit, Upload } from "lucide-react";
+import formatUnixTimestamp from "../../scripts/utils/formatUnixTimestamp";
 
 interface Props {
     title: string,
     description: string
     createdAt: number,
+    count: number
     thumbnailUrl: string
 }
 
-function Card({title, description, createdAt, thumbnailUrl}: Props) {
+function Card({title, description, createdAt, thumbnailUrl, count}: Props) {
   const [isHovered, setIsHovered] = useState(false);
   
   return (
@@ -45,12 +47,12 @@ function Card({title, description, createdAt, thumbnailUrl}: Props) {
         </div>
         
         <div className="flex items-center text-sm text-gray-500 gap-1">
-          <span>Created at: 12 May, 2024</span>
+          <span>Created at: {formatUnixTimestamp(createdAt)}</span>
         </div>
         
         <div className="flex items-center justify-between pt-1 space-x-2">
           <span className="text-sm font-medium text-gray-700 w-full overflow-hidden text-ellipsis text-nowrap">{description}</span>
-          <span className="text-sm font-bold bg-gray-100 px-2 py-1 rounded-full text-nowrap">156 photos</span>
+          <span className="text-sm font-bold bg-gray-100 px-2 py-1 rounded-full text-nowrap">{count} photos</span>
         </div>
       </div>
     </div>

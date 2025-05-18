@@ -10,6 +10,7 @@ interface Gallery {
   description: string;
   thumbnailUrl: string;
   sessionDate: number;
+  count: number;
 }
 
 export default function GalleryList() {
@@ -50,6 +51,7 @@ export default function GalleryList() {
           thumbnailUrl={gallery.thumbnailUrl}
           description={gallery.description}
           createdAt={gallery.sessionDate}
+          count={gallery.count}
         />
       ))}
     </div>
