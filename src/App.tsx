@@ -1,5 +1,9 @@
 import HomePage from "./pages/HomePage";
-import { createBrowserRouter, Navigate, RouterProvider } from "react-router-dom";
+import {
+  createBrowserRouter,
+  Navigate,
+  RouterProvider,
+} from "react-router-dom";
 import SignIn from "./pages/SignIn";
 import SignUp from "./pages/SignUp";
 import Dashboard from "./pages/Dashboard";
@@ -9,6 +13,7 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import ForgotPassword from "./pages/ForgotPassword";
 import VerifyCode from "./pages/VerifyCode";
 import ResetPassword from "./pages/ResetPassword";
+import Gallery from "./pages/Gallery";
 
 const router = createBrowserRouter([
   {
@@ -44,6 +49,14 @@ const router = createBrowserRouter([
     ),
   },
   {
+    path: "/gallery",
+    element: (
+      <ProtectedRoute>
+        <Gallery />
+      </ProtectedRoute>
+    ),
+  },
+  {
     path: "/payment/success",
     element: (
       <ProtectedRoute>
@@ -58,7 +71,7 @@ const router = createBrowserRouter([
         <Cancel />
       </ProtectedRoute>
     ),
-  }
+  },
 ]);
 
 function App() {

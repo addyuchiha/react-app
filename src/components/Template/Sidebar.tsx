@@ -53,7 +53,7 @@ function Sidebar({ active }: Props) {
       icon: <LayoutDashboard size={20} />,
       link: "/dashboard",
     },
-    { name: "Gallery", icon: <Album size={20} />, link: "/album" },
+    { name: "Gallery", icon: <Album size={20} />, link: "/gallery" },
     { name: "Favourites", icon: <Star size={20} />, link: "/favourites" },
   ];
 
