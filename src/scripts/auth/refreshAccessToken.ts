@@ -17,6 +17,10 @@ async function refreshAccessToken() {
     }).then(response => {
         if (response.ok) {
             return response.json()
+        } else if (response.status == 401) {
+            Cookies.remove("refreshToken")
+            window.location.href = "/sign-in"
+            throw new Error("Refresh Token Unauthorised");            
         } else {
             throw new Error("Network problem");            
         }
