@@ -16,18 +16,19 @@ function Card({ type, price, features, priceID }: Props) {
   const handleSubscribe = async () => {
     setIsLoading(true);
     try {
-        const paymentUrl = await initialisePayment(
-            priceID,
-            () => navigate("/sign-in"),
-            () => navigate("/dashboard")
-        );
-        if (paymentUrl) {
-            window.location.href = paymentUrl;
-        }
+      const paymentUrl = await initialisePayment(
+        priceID,
+        navigate,
+        () => navigate("/sign-in"),
+        () => navigate("/dashboard")
+      );
+      if (paymentUrl) {
+        window.location.href = paymentUrl;
+      }
     } catch (error) {
-        console.error("Subscription error:", error);
+      console.error("Subscription error:", error);
     } finally {
-        setIsLoading(false);
+      setIsLoading(false);
     }
   };
 
