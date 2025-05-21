@@ -1,10 +1,15 @@
-import { useEffect, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import getAuthToken from "../../scripts/auth/getAuthToken";
 import Card from "./Card";
 import GalleryListSkeleton from "./GalleryListSkeleton";
 import { useNavigate } from "react-router-dom";
+import CreateNewCard from "./CreateNewCard";
 
 const API_BASE = import.meta.env.VITE_API_BASE_URL;
+
+interface Props {
+  setCreatePopupState: Dispatch<SetStateAction<boolean>>
+}
 
 interface Gallery {
   name: string;
@@ -14,7 +19,7 @@ interface Gallery {
   count: number;
 }
 
-export default function GalleryList() {
+export default function GalleryList({ setCreatePopupState }: Props) {
   const [galleryList, setGalleryList] = useState([]);
   const [page, setPage] = useState(1);
   const [isLoading, setIsLoading] = useState(true);
@@ -56,6 +61,7 @@ export default function GalleryList() {
           count={gallery.count}
         />
       ))}
+      <CreateNewCard setCreatePopupState={setCreatePopupState} />
     </div>
   );
 }
