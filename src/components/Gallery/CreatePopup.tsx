@@ -1,5 +1,6 @@
 import { useState, useEffect, FormEvent, ChangeEvent, MouseEvent } from "react";
 import getAuthToken from "../../scripts/auth/getAuthToken";
+import { Navigate, useNavigate } from "react-router-dom";
 
 const API_BASE = import.meta.env.VITE_API_BASE_URL;
 
@@ -37,6 +38,7 @@ function CreateGallery({ setState, onSuccess, onCreated }: Props) {
   const [error, setError] = useState<string | null>(null);
   const [validationErrors, setValidationErrors] = useState<ValidationErrors>({});
   const [successState, setSuccessState] = useState<boolean>(false);
+  const navigate = useNavigate()
 
   // Reset validation errors when user types in a field
   useEffect(() => {
@@ -112,7 +114,7 @@ function CreateGallery({ setState, onSuccess, onCreated }: Props) {
     setError(null);
 
     try {
-      const accessToken = await getAuthToken();
+      const accessToken = await getAuthToken(navigate);
       const response = await fetch(`${API_BASE}/api/gallery`, {
         method: "POST",
         headers: {

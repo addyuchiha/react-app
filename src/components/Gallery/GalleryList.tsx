@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import getAuthToken from "../../scripts/auth/getAuthToken";
 import Card from "./Card";
 import GalleryListSkeleton from "./GalleryListSkeleton";
+import { useNavigate } from "react-router-dom";
 
 const API_BASE = import.meta.env.VITE_API_BASE_URL;
 
@@ -17,10 +18,11 @@ export default function GalleryList() {
   const [galleryList, setGalleryList] = useState([]);
   const [page, setPage] = useState(1);
   const [isLoading, setIsLoading] = useState(true);
+  const navigate = useNavigate()
 
   useEffect(() => {
     const fetchGalleryList = async () => {
-      const accessToken = await getAuthToken();
+      const accessToken = await getAuthToken(navigate);
       try {
         const response = await fetch(
           `${API_BASE}/api/gallery?page=${page}&limit=100`,
