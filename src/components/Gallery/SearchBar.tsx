@@ -1,8 +1,30 @@
-import { useState } from "react";
-import { Search } from "lucide-react";
+import { type Dispatch, type SetStateAction, useState, type KeyboardEvent, type ChangeEvent } from "react"
+import { Search } from "lucide-react"
 
-const SearchBar = () => {
-  const [query, setQuery] = useState("");
+interface Props {
+  handleRefresh: () => void
+  setSearchTerms: Dispatch<SetStateAction<string | null>>
+}
+
+const SearchBar = ({ setSearchTerms, handleRefresh }: Props) => {
+  const [query, setQuery] = useState("")
+
+  const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter") {
+      setSearchTerms(query.trim() || null)
+      handleRefresh()
+    }
+  }
+
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const newValue = e.target.value
+    setQuery(newValue)
+
+    if (newValue.trim() === "") {
+      setSearchTerms(null)
+      handleRefresh()
+    }
+  }
 
   return (
     <div className="relative w-full max-w-md">
@@ -12,12 +34,13 @@ const SearchBar = () => {
       <input
         type="text"
         value={query}
-        onChange={(e) => setQuery(e.target.value)}
+        onChange={handleChange}
+        onKeyDown={handleKeyDown}
         placeholder="Search galleries..."
         className="w-full pl-10 pr-4 py-2 border rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-accent"
       />
     </div>
-  );
-};
+  )
+}
 
-export default SearchBar;
+export default SearchBar

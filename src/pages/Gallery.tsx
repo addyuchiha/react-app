@@ -9,6 +9,7 @@ import GalleryList from "../components/Gallery/GalleryList";
 export default function Gallery() {
   const [createPopupState, setCreatePopupState] = useState(false);
   const [refreshKey, setRefreshKey] = useState(0);
+  const [searchTerms, setSearchTerms] = useState<string | null>(null)
 
   const handleRefresh = () => {
     setRefreshKey(prev => prev + 1);
@@ -21,7 +22,7 @@ export default function Gallery() {
         <div className="flex justify-between">
           <span className="text-3xl font-bold block">My Galleries</span>
           <div className="flex space-x-4">
-            <SearchBar />
+            <SearchBar handleRefresh={handleRefresh} setSearchTerms={setSearchTerms} />
             <button
               onClick={() => setCreatePopupState(true)}
               className="flex space-x-2 p-2 rounded-xl bg-accent text-white hover:brightness-90 transition-all text-nowrap pr-3"
@@ -32,7 +33,7 @@ export default function Gallery() {
           </div>
         </div>
 
-        <GalleryList key={refreshKey} setCreatePopupState={setCreatePopupState} handleRefresh={handleRefresh} />
+        <GalleryList key={refreshKey} setCreatePopupState={setCreatePopupState} handleRefresh={handleRefresh} searchTerms={searchTerms} />
       </Template>
     </>
   );
