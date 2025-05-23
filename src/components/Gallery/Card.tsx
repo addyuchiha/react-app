@@ -1,5 +1,7 @@
+"use client";
+
 import { useState } from "react";
-import { Edit, Upload } from "lucide-react";
+import { Edit, Upload, Lock, Globe } from "lucide-react";
 import formatUnixTimestamp from "../../scripts/utils/formatUnixTimestamp";
 import UpdateGalleryPopup from "./UpdateGalleryPopup";
 import UploadDialog from "./UploadDialog";
@@ -12,7 +14,7 @@ interface Props {
   thumbnailUrl: string;
   galleryId: string;
   isPublic: boolean;
-  handleRefresh: () => void
+  handleRefresh: () => void;
 }
 
 function Card({
@@ -23,7 +25,7 @@ function Card({
   count,
   galleryId,
   isPublic,
-  handleRefresh
+  handleRefresh,
 }: Props) {
   const [isHovered, setIsHovered] = useState(false);
   const [showEdit, setShowEdit] = useState(false);
@@ -45,7 +47,11 @@ function Card({
         />
       )}
       {showUpload && (
-        <UploadDialog setState={setShowUpload} galleryId={galleryId} onUploaded={handleRefresh}  />
+        <UploadDialog
+          setState={setShowUpload}
+          galleryId={galleryId}
+          onUploaded={handleRefresh}
+        />
       )}
       <div
         className="rounded-xl bg-white overflow-hidden border shadow-sm hover:shadow-md transition-all duration-300 h-max cursor-pointer"
@@ -62,6 +68,20 @@ function Card({
             alt={title}
           />
 
+          {/* Privacy indicator - always visible in top-right corner */}
+          <div className="absolute top-2 right-2">
+            <div
+              className={`p-1.5 rounded-full backdrop-blur-sm ${
+                isPublic
+                  ? "bg-green-500/80 text-white"
+                  : "bg-gray-800/80 text-white"
+              }`}
+              title={isPublic ? "Public Gallery" : "Private Gallery"}
+            >
+              {isPublic ? <Globe size={14} /> : <Lock size={14} />}
+            </div>
+          </div>
+
           {/* Overlay that appears on hover */}
           <div
             className={`absolute inset-0 bg-black/30 flex items-center justify-center transition-opacity duration-300 ${
@@ -69,7 +89,10 @@ function Card({
             }`}
           >
             <div className="flex gap-3">
-              <button onClick={() => setShowUpload(true)} className="p-2 bg-white/80 rounded-full hover:bg-white transition-colors">
+              <button
+                onClick={() => setShowUpload(true)}
+                className="p-2 bg-white/80 rounded-full hover:bg-white transition-colors"
+              >
                 <Upload size={18} className="text-gray-800" />
               </button>
               <button
@@ -86,6 +109,20 @@ function Card({
         <div className="p-4 space-y-2">
           <div className="flex justify-between items-start">
             <h3 className="text-lg font-bold">{title}</h3>
+            {/* Privacy indicator in content area as well */}
+            <div className="flex items-center gap-1 text-xs text-gray-500">
+              {isPublic ? (
+                <>
+                  <Globe size={12} />
+                  <span>Public</span>
+                </>
+              ) : (
+                <>
+                  <Lock size={12} />
+                  <span>Private</span>
+                </>
+              )}
+            </div>
           </div>
 
           <div className="flex items-center text-sm text-gray-500 gap-1">
