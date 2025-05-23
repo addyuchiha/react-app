@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Edit, Upload } from "lucide-react";
 import formatUnixTimestamp from "../../scripts/utils/formatUnixTimestamp";
 import UpdateGalleryPopup from "./UpdateGalleryPopup";
+import UploadDialog from "./UploadDialog";
 
 interface Props {
   title: string;
@@ -26,6 +27,7 @@ function Card({
 }: Props) {
   const [isHovered, setIsHovered] = useState(false);
   const [showEdit, setShowEdit] = useState(false);
+  const [showUpload, setShowUpload] = useState(false);
 
   return (
     <>
@@ -41,6 +43,9 @@ function Card({
           }}
           onUpdated={handleRefresh}
         />
+      )}
+      {showUpload && (
+        <UploadDialog setState={setShowUpload} galleryId={galleryId} onUploaded={handleRefresh}  />
       )}
       <div
         className="rounded-xl bg-white overflow-hidden border shadow-sm hover:shadow-md transition-all duration-300 h-max cursor-pointer"
@@ -64,7 +69,7 @@ function Card({
             }`}
           >
             <div className="flex gap-3">
-              <button className="p-2 bg-white/80 rounded-full hover:bg-white transition-colors">
+              <button onClick={() => setShowUpload(true)} className="p-2 bg-white/80 rounded-full hover:bg-white transition-colors">
                 <Upload size={18} className="text-gray-800" />
               </button>
               <button

@@ -1,6 +1,6 @@
 import { useState, useEffect, FormEvent, ChangeEvent, MouseEvent } from "react";
 import getAuthToken from "../../scripts/auth/getAuthToken";
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const API_BASE = import.meta.env.VITE_API_BASE_URL;
 

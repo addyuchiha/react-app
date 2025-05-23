@@ -8,10 +8,10 @@ import GalleryList from "../components/Gallery/GalleryList";
 
 export default function Gallery() {
   const [createPopupState, setCreatePopupState] = useState(false);
-  const [refreshKey, setRefreshKey] = useState(0); // trigger for refresh
+  const [refreshKey, setRefreshKey] = useState(0);
 
   const handleRefresh = () => {
-    setRefreshKey(prev => prev + 1); // increment to re-render GalleryList
+    setRefreshKey(prev => prev + 1);
   };
 
   return (
