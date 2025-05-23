@@ -32,7 +32,7 @@ export default function Gallery() {
           </div>
         </div>
 
-        <GalleryList key={refreshKey} setCreatePopupState={setCreatePopupState} />
+        <GalleryList key={refreshKey} setCreatePopupState={setCreatePopupState} handleRefresh={handleRefresh} />
       </Template>
     </>
   );

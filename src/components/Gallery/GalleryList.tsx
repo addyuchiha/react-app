@@ -8,7 +8,8 @@ import CreateNewCard from "./CreateNewCard";
 const API_BASE = import.meta.env.VITE_API_BASE_URL;
 
 interface Props {
-  setCreatePopupState: Dispatch<SetStateAction<boolean>>
+  setCreatePopupState: Dispatch<SetStateAction<boolean>>;
+  handleRefresh: () => void
 }
 
 interface Gallery {
@@ -17,13 +18,15 @@ interface Gallery {
   thumbnailUrl: string;
   sessionDate: number;
   count: number;
+  guid: string;
+  public: boolean;
 }
 
-export default function GalleryList({ setCreatePopupState }: Props) {
+export default function GalleryList({ setCreatePopupState, handleRefresh }: Props) {
   const [galleryList, setGalleryList] = useState([]);
   const [page, setPage] = useState(1);
   const [isLoading, setIsLoading] = useState(true);
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchGalleryList = async () => {
@@ -59,6 +62,9 @@ export default function GalleryList({ setCreatePopupState }: Props) {
           description={gallery.description}
           createdAt={gallery.sessionDate}
           count={gallery.count}
+          galleryId={gallery.guid}
+          isPublic={gallery.public}
+          handleRefresh={handleRefresh}
         />
       ))}
       <CreateNewCard setCreatePopupState={setCreatePopupState} />
