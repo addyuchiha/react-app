@@ -42,7 +42,7 @@ function UploadDialog({ setState, galleryId, onSuccess, onUploaded }: Props) {
   const validateFile = (file: File): string | null => {
     // Check file size (max 10MB)
     if (file.size > 25 * 1024 * 1024) {
-      return "Image size must be less than 10MB"
+      return "Image size must be less than 25MB"
     }
 
     // Check file type (images only)
