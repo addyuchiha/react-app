@@ -14,6 +14,7 @@ import ForgotPassword from "./pages/ForgotPassword";
 import VerifyCode from "./pages/VerifyCode";
 import ResetPassword from "./pages/ResetPassword";
 import Gallery from "./pages/Gallery";
+import GalleryView from "./pages/GalleryView";
 
 const router = createBrowserRouter([
   {
@@ -41,6 +42,22 @@ const router = createBrowserRouter([
     element: <ResetPassword />,
   },
   {
+    path: "/payment/success",
+    element: (
+      <ProtectedRoute>
+        <Success />
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: "/payment/cancel",
+    element: (
+      <ProtectedRoute>
+        <Cancel />
+      </ProtectedRoute>
+    ),
+  },
+  {
     path: "/dashboard",
     element: (
       <ProtectedRoute>
@@ -57,21 +74,13 @@ const router = createBrowserRouter([
     ),
   },
   {
-    path: "/payment/success",
+    path: "/gallery/:id",
     element: (
       <ProtectedRoute>
-        <Success />
+        <GalleryView />
       </ProtectedRoute>
-    ),
-  },
-  {
-    path: "/payment/cancel",
-    element: (
-      <ProtectedRoute>
-        <Cancel />
-      </ProtectedRoute>
-    ),
-  },
+    )
+  }
 ]);
 
 function App() {
