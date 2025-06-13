@@ -1,10 +1,11 @@
 "use client";
 
-import { useState } from "react";
+import { useState, MouseEvent } from "react";
 import { Edit, Upload, Lock, Globe } from "lucide-react";
 import formatUnixTimestamp from "../../scripts/utils/formatUnixTimestamp";
 import UpdateGalleryPopup from "./UpdateGalleryPopup";
 import UploadDialog from "./UploadDialog";
+import { useNavigate } from "react-router-dom";
 
 interface Props {
   title: string;
@@ -30,6 +31,14 @@ function Card({
   const [isHovered, setIsHovered] = useState(false);
   const [showEdit, setShowEdit] = useState(false);
   const [showUpload, setShowUpload] = useState(false);
+
+  const navigate = useNavigate()
+
+  const handleOpen = (e: MouseEvent<HTMLDivElement>) => {
+    if (!(e.target as HTMLElement).closest('button')) {
+      navigate(`/gallery/${galleryId}`);
+    }
+  }
 
   return (
     <>
@@ -57,6 +66,7 @@ function Card({
         className="rounded-xl bg-white overflow-hidden border shadow-sm hover:shadow-md transition-all duration-300 h-max cursor-pointer"
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
+        onMouseDown={(e) => handleOpen(e)}
       >
         {/* Image Container with Hover Effects */}
         <div className="h-52 relative overflow-hidden flex bg-black/10">
