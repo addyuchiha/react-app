@@ -3,9 +3,9 @@ import verifyAuthToken from "../auth/verifyAuthToken";
 
 const API_BASE = import.meta.env.VITE_API_BASE_URL;
 
-async function checkActiveSubscription() {
-    const accessToken = await getAuthToken()
-    await verifyAuthToken()
+async function checkActiveSubscription(navigate: (dest: string) => void) {
+    const accessToken = await getAuthToken(navigate)
+    await verifyAuthToken(navigate)
     
     try {
         const response = await fetch(`${API_BASE}/api/user/`, {
@@ -17,7 +17,7 @@ async function checkActiveSubscription() {
         });
 
         if (response.status === 401) {
-            window.location.href = "/sign-in"
+            navigate("/sign-in")
             return false;
         }
 

@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import getAuthToken from "../../scripts/auth/getAuthToken";
+import { useNavigate } from "react-router-dom";
 
 const API_BASE = import.meta.env.VITE_API_BASE_URL;
 
@@ -18,6 +19,7 @@ export default function PaymentHistory() {
   >(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
+  const navigate = useNavigate()
 
   // Format currency based on locale and currency code
   const formatAmount = (amount: number, currency: string) => {
@@ -40,7 +42,7 @@ export default function PaymentHistory() {
   useEffect(() => {
     const fetchPaymentDetails = async (): Promise<void> => {
       try {
-        const authToken = await getAuthToken();
+        const authToken = await getAuthToken(navigate);
         const response = await fetch(`${API_BASE}/api/payments/`, {
           method: "GET",
           headers: {

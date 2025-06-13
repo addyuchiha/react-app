@@ -3,8 +3,8 @@ import getAuthToken from "./getAuthToken";
 
 const API_BASE = import.meta.env.VITE_API_BASE_URL;
 
-async function verifyAuthToken() {
-    const accessToken = await getAuthToken()
+async function verifyAuthToken(navigate: (dest: string) => void) {
+    const accessToken = await getAuthToken(navigate)
 
     fetch(`${API_BASE}/api/user/`, {
         method: "GET",
@@ -15,7 +15,7 @@ async function verifyAuthToken() {
     }).then(response => {
         if (response.status == 401) {
             Cookies.remove("accessToken")
-            window.location.href = "/sign-in"
+            navigate("/sign-in")
         }
     })
 }

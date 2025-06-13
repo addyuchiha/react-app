@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import getAuthToken from "../../scripts/auth/getAuthToken";
+import { useNavigate } from "react-router-dom";
 
 const API_BASE = import.meta.env.VITE_API_BASE_URL;
 
@@ -31,6 +32,7 @@ export default function SubscriptionDetails() {
   const [isCanceling, setIsCanceling] = useState<boolean>(false);
   const [showConfirmDialog, setShowConfirmDialog] = useState<boolean>(false);
   const [pendingCancelId, setPendingCancelId] = useState<string>("");
+  const navigate = useNavigate()
 
   const formatDate = (timestamp: number) => {
     return new Date(timestamp * 1000).toLocaleDateString("en-US", {
@@ -52,7 +54,7 @@ export default function SubscriptionDetails() {
   const handleCancelSubscription = async (subscriptionId: string) => {
     try {
       setIsCanceling(true);
-      const authToken = await getAuthToken();
+      const authToken = await getAuthToken(navigate);
       const response = await fetch(
         `${API_BASE}/api/payments/cancel_subscription`,
         {
@@ -82,7 +84,7 @@ export default function SubscriptionDetails() {
 
   const fetchSubscriptionDetails = async (): Promise<void> => {
     try {
-      const authToken = await getAuthToken();
+      const authToken = await getAuthToken(navigate);
       const response = await fetch(`${API_BASE}/api/payments/subscriptions`, {
         method: "GET",
         headers: {

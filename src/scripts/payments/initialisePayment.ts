@@ -2,8 +2,8 @@ import getAuthToken from "../auth/getAuthToken";
 
 const API_BASE = import.meta.env.VITE_API_BASE_URL;
 
-async function initialisePayment(priceID: string, onUnauthorized?: () => void, onBadRequest?: () => void) {
-    const authToken = await getAuthToken();
+async function initialisePayment(priceID: string, navigate: (dest: string) => void, onUnauthorized?: () => void, onBadRequest?: () => void) {
+    const authToken = await getAuthToken(navigate);
     
     try {
         const response = await fetch(`${API_BASE}/api/payments/create`, {

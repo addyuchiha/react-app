@@ -2,7 +2,7 @@ import Cookies from 'js-cookie';
 
 const API_BASE = import.meta.env.VITE_API_BASE_URL;
 
-async function refreshAccessToken() {
+async function refreshAccessToken(navigate: (dest: string) => void) {
     const refreshToken = Cookies.get('refreshToken');
     console.log("refreshing")
     
@@ -17,6 +17,11 @@ async function refreshAccessToken() {
     }).then(response => {
         if (response.ok) {
             return response.json()
+        } else if (response.status == 401) {
+            Cookies.remove("refreshToken")
+            Cookies.remove("accessToken")
+            navigate("/sign-in")
+            throw new Error("Refresh Token Unauthorised");            
         } else {
             throw new Error("Network problem");            
         }
