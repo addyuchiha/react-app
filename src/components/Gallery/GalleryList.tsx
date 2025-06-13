@@ -32,7 +32,7 @@ export default function GalleryList({
   const [page, setPage] = useState(1);
   const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
-  console.log(searchTerms);
+  
   useEffect(() => {
     const fetchGalleryList = async () => {
       const accessToken = await getAuthToken(navigate);
@@ -53,7 +53,9 @@ export default function GalleryList({
         setGalleryList(data.data);
         setIsLoading(false);
       } catch (err) {
-      } finally {
+        console.log(err)
+        alert("Something went wrong. Please try again later")
+        navigate("/")
       }
     };
     fetchGalleryList();
