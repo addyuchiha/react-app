@@ -77,7 +77,7 @@ function ChangePassword({ setState }: Props) {
       if (res.ok) {
         setSuccessState(true);
         setTimeout(() => {
-          navigate("/profile");
+         setState(false); 
         }, 1500);
       } else if (data.errors) {
         const newErrors: Errors = {
