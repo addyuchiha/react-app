@@ -124,7 +124,7 @@ export default function SubscriptionDetails() {
   };
 
   return (
-    <div className="w-full bg-gray-800 rounded-xl border border-gray-700 shadow-lg my-4">
+    <div className="w-full bg-gray-800 rounded-xl border border-gray-700 shadow-lg my-2">
       <div className="rounded-xl overflow-hidden">
         {isLoading && (
           <div className="flex justify-center items-center p-12">
