@@ -65,7 +65,8 @@ export default function PicturesList({
     return <>"loading"</>;
   } else {
     return (
-      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-3 sm:gap-4 lg:gap-6 overflow-auto rounded-xl">
+          <div className="flex-1 overflow-y-auto px-4 pb-4">
+      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-3 sm:gap-4 lg:gap-6 rounded-xl">
         {picturesList.map((picture: Picture) => (
           <PictureContainer
             key={picture.guid}
@@ -73,6 +74,7 @@ export default function PicturesList({
             galleryGuid={galleryGuid}
           />
         ))}
+      </div>
       </div>
     );
   }
