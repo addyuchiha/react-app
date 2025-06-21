@@ -18,7 +18,7 @@ export default function Details() {
     navigate("/sign-in");
   };
 
-  const forgetPassword = () => {
+  const ResetPassword = () => {
     setShowChangePasswordDialog(true);
   };
 
@@ -39,7 +39,7 @@ export default function Details() {
       <SubscriptionDetails />
 
       <button
-        onClick={forgetPassword}
+        onClick={ResetPassword}
         className="text-white hover:text-accent px-4 py-1 rounded-lg transition-colors font-medium text-sm flex justify-center items-center gap-2"
       >
         Reset Password
