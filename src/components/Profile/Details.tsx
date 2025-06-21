@@ -3,7 +3,7 @@ import useUserState from "../../scripts/auth/useState";
 import { LogOut, User2 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import SubscriptionDetails from "./SubscriptionDetails";
-import ChangePassword from "./ChangePassword";
+import ChangePassword from "./ResetPassword";
 import { useState } from "react";
 
 export default function Details() {
