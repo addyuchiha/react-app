@@ -40,9 +40,9 @@ export default function Details() {
 
       <button
         onClick={forgetPassword}
-        className="text-white hover:text-accent px-4 py-1 rounded-lg transition-colors font-medium flex justify-center items-center gap-2"
+        className="text-white hover:text-accent px-4 py-1 rounded-lg transition-colors font-medium text-sm flex justify-center items-center gap-2"
       >
-        Reset Password???
+        Reset Password
       </button>
 
       <button
