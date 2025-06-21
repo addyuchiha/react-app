@@ -42,7 +42,7 @@ export default function Details() {
         onClick={forgetPassword}
         className="text-white hover:text-accent px-4 py-1 rounded-lg transition-colors font-medium flex justify-center items-center gap-2"
       >
-        Change Password
+        Reset Password???
       </button>
 
       <button
