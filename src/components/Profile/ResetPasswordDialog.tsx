@@ -15,7 +15,7 @@ interface Errors {
 
 const API_BASE = import.meta.env.VITE_API_BASE_URL;
 
-function ChangePassword({ setState }: Props) {
+function ResetPasswordDialog({ setState }: Props) {
   const navigate = useNavigate();
 
   const [oldPassword, setOldPassword] = useState("");
@@ -264,5 +264,5 @@ function ChangePassword({ setState }: Props) {
   );
 }
 
-export default ChangePassword;
+export default ResetPasswordDialog;
   

@@ -3,8 +3,9 @@ import useUserState from "../../scripts/auth/useState";
 import { LogOut, User2 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import SubscriptionDetails from "./SubscriptionDetails";
-import ChangePassword from "./ResetPassword";
+
 import { useState } from "react";
+import ResetPasswordDialog from "./ResetPasswordDialog";
 
 export default function Details() {
   const user = useUserState();
@@ -54,8 +55,9 @@ export default function Details() {
       </button>
 
       {showChangePasswordDialog && (
-        <ChangePassword setState={setShowChangePasswordDialog} />
+        <ResetPasswordDialog setState={setShowChangePasswordDialog} />
       )}
+
     </div>
   );
 }
