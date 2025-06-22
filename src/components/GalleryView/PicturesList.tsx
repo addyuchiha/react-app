@@ -36,6 +36,8 @@ export default function PicturesList({
   useEffect(() => {
     const fetchPicturesList = async () => {
       const accessToken = await getAuthToken(navigate);
+      console.log(sectionGuid)
+      console.log(`${API_BASE}/api/gallery/${galleryGuid}/images${sectionGuid ? `/${sectionGuid}` : ''}`)
       try {
         const response = await fetch(
           `${API_BASE}/api/gallery/${galleryGuid}/images${sectionGuid ? `/${sectionGuid}` : ''}`,
