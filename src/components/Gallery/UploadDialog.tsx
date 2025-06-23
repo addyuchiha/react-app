@@ -1,9 +1,10 @@
 "use client"
 
-import { useState, useRef, type ChangeEvent, type MouseEvent, type DragEvent } from "react"
+import { useState, useRef, type ChangeEvent, type MouseEvent, type DragEvent, useEffect } from "react"
 import { Upload, X, CheckCircle, AlertCircle, ImageIcon } from "lucide-react"
 import getAuthToken from "../../scripts/auth/getAuthToken"
 import { useNavigate } from "react-router-dom"
+import SectionBar from "../GalleryView/SectionBar"
 
 const API_BASE = import.meta.env.VITE_API_BASE_URL
 
@@ -28,6 +29,17 @@ interface ApiResponse {
   [key: string]: any
 }
 
+interface Option {
+  guid: string;
+  name: string;
+  position: number;
+  createdAt: string;
+  updatedAt: null | string;
+}
+
+
+
+
 function UploadDialog({ setState, galleryId, onSuccess, onUploaded }: Props) {
   const [files, setFiles] = useState<UploadFile[]>([])
   const [isUploading, setIsUploading] = useState<boolean>(false)
@@ -36,6 +48,33 @@ function UploadDialog({ setState, galleryId, onSuccess, onUploaded }: Props) {
   const fileInputRef = useRef<HTMLInputElement>(null)
   const navigate = useNavigate()
   const [allUploadsSuccessful, setAllUploadsSuccessful] = useState<boolean>(false)
+
+  const [sectionOptions, setSectionOptions] = useState<Option[]>([])
+const [selectedSection, setSelectedSection] = useState<Option>({ name: "Main", guid: "", position: 0, createdAt: "", updatedAt: null })
+const [isSectionDropdownOpen, setIsSectionDropdownOpen] = useState(false)
+
+
+
+useEffect(() => {
+  async function fetchSections() {
+    try {
+      const sectionParam = selectedSection.guid ? `?sectionGuid=${selectedSection.guid}` : ""
+      const accessToken = await getAuthToken(navigate)
+      const res = await fetch(`${API_BASE}/api/gallery/${galleryId}/section`, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      })
+      const data = await res.json()
+      setSectionOptions([{ name: "Main", guid: "", position: 0, createdAt: "", updatedAt: null }, ...data])
+    } catch (err) {
+      console.error("Failed to load sections:", err)
+    }
+  }
+  fetchSections()
+}, [galleryId])
+
+
 
   const generateId = () => Math.random().toString(36).substr(2, 9)
 
@@ -123,44 +162,59 @@ function UploadDialog({ setState, galleryId, onSuccess, onUploaded }: Props) {
       addFiles(e.dataTransfer.files)
     }
   }
+const uploadFile = async (uploadFile: UploadFile): Promise<void> => {
+  try {
+    const accessToken = await getAuthToken(navigate);
+    const formData = new FormData();
+    formData.append("file", uploadFile.file);
 
-  const uploadFile = async (uploadFile: UploadFile): Promise<void> => {
-    try {
-      const accessToken = await getAuthToken(navigate)
-      const formData = new FormData()
-      formData.append("file", uploadFile.file)
+    // Determine the correct upload URL
+    const uploadUrl = selectedSection.guid
+      ? `${API_BASE}/api/gallery/${galleryId}/upload/${selectedSection.guid}`
+      : `${API_BASE}/api/gallery/${galleryId}/upload`;
 
-      // Update file status to uploading
-      setFiles((prev) => prev.map((f) => (f.id === uploadFile.id ? { ...f, status: "uploading", progress: 0 } : f)))
-
-      const response = await fetch(`${API_BASE}/api/gallery/${galleryId}/upload`, {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-        body: formData,
-      })
-
-      const data: ApiResponse = await response.json()
-
-      if (!response.ok) {
-        throw new Error(data.message || "Failed to upload image")
-      }
-
-      // Update file status to success
-      setFiles((prev) => prev.map((f) => (f.id === uploadFile.id ? { ...f, status: "success", progress: 100 } : f)))
-    } catch (err) {
-      const errorMessage = err instanceof Error ? err.message : "Upload failed"
-
-      // Update file status to error
-      setFiles((prev) =>
-        prev.map((f) => (f.id === uploadFile.id ? { ...f, status: "error", progress: 0, error: errorMessage } : f)),
+    // Update file status to uploading
+    setFiles((prev) =>
+      prev.map((f) =>
+        f.id === uploadFile.id ? { ...f, status: "uploading", progress: 0 } : f
       )
+    );
 
-      // Re-throw the error so the calling function knows this upload failed
-      throw err
+    const response = await fetch(uploadUrl, {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+      body: formData,
+    });
+
+    const data: ApiResponse = await response.json();
+
+    if (!response.ok) {
+      throw new Error(data.message || "Failed to upload image");
     }
+
+    // Update file status to success
+    setFiles((prev) =>
+      prev.map((f) =>
+        f.id === uploadFile.id ? { ...f, status: "success", progress: 100 } : f
+      )
+    );
+  } catch (err) {
+    const errorMessage = err instanceof Error ? err.message : "Upload failed";
+
+    // Update file status to error
+    setFiles((prev) =>
+      prev.map((f) =>
+        f.id === uploadFile.id
+          ? { ...f, status: "error", progress: 0, error: errorMessage }
+          : f
+      )
+    );
+
+    throw err;
   }
+};
 
   const handleUpload = async () => {
     if (files.length === 0) return
@@ -277,6 +331,8 @@ function UploadDialog({ setState, galleryId, onSuccess, onUploaded }: Props) {
           )}
 
           {/* Image Drop Zone */}
+
+         
           <div
             className={`border-2 border-dashed rounded-lg p-8 text-center transition-colors ${
               isDragOver ? "border-blue-400 bg-blue-50" : "border-gray-300 hover:border-gray-400"
@@ -305,6 +361,45 @@ function UploadDialog({ setState, galleryId, onSuccess, onUploaded }: Props) {
               accept="image/jpeg,image/jpg,image/png,image/gif,image/webp"
             />
           </div>
+
+          {/* Section Selector */}
+<div className="relative w-full my-3">
+  <button
+    type="button"
+    onClick={() => setIsSectionDropdownOpen(!isSectionDropdownOpen)}
+    className="w-full flex justify-between items-center px-4 py-2 text-medium bg-white border border-gray-300 text-gray-800 font-semibold rounded-md shadow-sm hover:bg-gray-50 transition-all"
+  >
+    {selectedSection.name}
+    <svg
+      className="w-4 h-4 ml-2"
+      viewBox="0 0 20 20"
+      fill="currentColor"
+    >
+      <path
+        fillRule="evenodd"
+        d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z"
+        clipRule="evenodd"
+      />
+    </svg>
+  </button>
+
+  {isSectionDropdownOpen && (
+    <div className="absolute z-10 mt-1 w-full bg-white rounded-md shadow-lg ring-1 ring-gray-300">
+      {sectionOptions.map((option) => (
+        <button
+          key={option.guid}
+          onClick={() => {
+            setSelectedSection(option)
+            setIsSectionDropdownOpen(false)
+          }}
+          className="block w-full px-4 py-2 text-left text-medium text-gray-800 hover:bg-gray-100"
+        >
+          {option.name}
+        </button>
+      ))}
+    </div>
+  )}
+</div>
 
           {/* Image Preview Grid */}
           {hasFiles && (
@@ -382,8 +477,12 @@ function UploadDialog({ setState, galleryId, onSuccess, onUploaded }: Props) {
             </div>
           )}
 
+
+
+          
+
           {/* Action Buttons */}
-          <div className="flex items-center justify-end mt-8 border-t border-gray-200 pt-5">
+          <div className="flex items-center justify-end mt-2 border-t border-gray-200 pt-5">
             <button
               type="button"
               onClick={handleClose}
