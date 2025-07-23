@@ -33,10 +33,8 @@ function PictureContainer({ picture, galleryGuid }: Props) {
           alt=""
         />
 
-        {/* Overlay with gradient background */}
         <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
 
-        {/* Action buttons */}
         <div className="absolute top-2 right-2 sm:top-3 sm:right-3 flex flex-col gap-1.5 sm:gap-2 opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-y-2 group-hover:translate-y-0">
           <button
             onClick={handleTransfer}
