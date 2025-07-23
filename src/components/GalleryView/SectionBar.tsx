@@ -133,11 +133,11 @@ function SectionBar({ galleryGuid, setSection }: SectionBarProps): JSX.Element {
 
         {isOpen && (
           <div className="absolute right-0 z-10 mt-2 w-full origin-top-right rounded-md bg-primary shadow-lg ring-1 ring-gray-600 ring-opacity-50">
-            <div className="py-1">
+            <div className="p-2">
               {allOptions.map((option) => (
                 <button
                   key={option.name}
-                  className="block w-full px-4 py-2 text-left text-sm text-gray-300 hover:bg-gray-700 hover:text-white transition-colors duration-200"
+                  className="block w-full rounded-sm  px-4 py-2 text-left text-sm text-gray-300 hover:bg-gray-700 hover:text-white transition-colors duration-200"
                   onClick={() => {
                     setSelected(option.name);
                     console.log(option.guid)
@@ -148,7 +148,7 @@ function SectionBar({ galleryGuid, setSection }: SectionBarProps): JSX.Element {
                   {option.name}
                 </button>
               ))}
-              <div className="border-t border-gray-600 my-1 mx-4"></div>
+              <div className="border-t border-gray-600 my-1 mx-2"></div>
               <button
                 className="block w-full px-4 py-2 text-left text-sm text-gray-300 hover:bg-gray-700 hover:text-white transition-colors duration-200"
                 onClick={() => {
