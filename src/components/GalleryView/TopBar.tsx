@@ -30,7 +30,6 @@ const TopBar: FC<TopBarProps> = ({
     return (
       <div className="w-full bg-white border rounded-xl px-6 py-4 pl-2">
         <div className="flex items-center justify-between">
-          {/* Left section with back button and title */}
           <div className="flex items-center">
             <button
               onClick={onBack}
@@ -46,7 +45,6 @@ const TopBar: FC<TopBarProps> = ({
             </div>
           </div>
 
-          {/* Right section with action buttons */}
           <div className="flex items-center space-x-3">
             <button
               onClick={onEdit}

@@ -36,10 +36,10 @@ function Delete({ setState, galleryGuid, pictureGuid, onSuccess, onDeleted }: Pr
         },
       })
 
-      const data: ApiResponse = await response.json()
+      // const data: ApiResponse = await response.json()
 
       if (!response.ok) {
-        throw new Error(data.message || "Failed to delete picture")
+        throw new Error("Failed to delete picture.")
       }
 
       setSuccessState(true)

@@ -40,7 +40,9 @@ export default function PicturesList({
       console.log(`${API_BASE}/api/gallery/${galleryGuid}/images${sectionGuid ? `/${sectionGuid}` : ''}`)
       try {
         const response = await fetch(
-          `${API_BASE}/api/gallery/${galleryGuid}/images${sectionGuid ? `/${sectionGuid}` : ''}`,
+          `${API_BASE}/api/gallery/${galleryGuid}/images${
+            sectionGuid ? `/${sectionGuid}` : ""
+          }`,
           {
             method: "GET",
             headers: {
@@ -50,7 +52,7 @@ export default function PicturesList({
           }
         );
         const data = await response.json();
-        console.log(data)
+        console.log(data);
         setPicturesList(data);
         setIsLoading(false);
       } catch (err) {
@@ -67,14 +69,16 @@ export default function PicturesList({
     return <>"loading"</>;
   } else {
     return (
-      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-3 sm:gap-4 lg:gap-6 overflow-auto rounded-xl">
-        {picturesList.map((picture: Picture) => (
-          <PictureContainer
-            key={picture.guid}
-            picture={picture}
-            galleryGuid={galleryGuid}
-          />
-        ))}
+      <div className="flex-1 overflow-y-auto">
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-3 sm:gap-4 lg:gap-6 rounded-xl">
+          {picturesList.map((picture: Picture) => (
+            <PictureContainer
+              key={picture.guid}
+              picture={picture}
+              galleryGuid={galleryGuid}
+            />
+          ))}
+        </div>
       </div>
     );
   }
